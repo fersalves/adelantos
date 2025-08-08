@@ -202,7 +202,8 @@
             bottom: 0;
             left: 0;
             right: 0;
-            width: 100%;
+            width: 360px;
+            max-width: 360px;
             background: white;
             border-radius: 20px 20px 0 0;
             padding: 20px;
@@ -211,6 +212,7 @@
             z-index: 1001;
             max-height: 70%;
             overflow-y: auto;
+            margin: 0 auto;
         }
 
         .bottom-sheet.visible {
@@ -521,10 +523,12 @@
 
             .bottom-sheet {
                 position: absolute;
-                width: 100%;
+                width: 360px;
+                max-width: 360px;
                 left: 0;
                 right: 0;
                 bottom: 0;
+                margin: 0 auto;
                 transform: translateY(100%);
             }
 
