@@ -194,7 +194,7 @@
         }
 
         .carousel-card {
-            min-width: 280px;
+            min-width: 240px;
             background: white;
             border-radius: 12px;
             padding: 16px;
@@ -1122,15 +1122,18 @@
             const cards = document.querySelectorAll('.carousel-card');
             const container = document.querySelector('.carousel-container');
             
-            // Calculate centering for each card
-            const cardWidth = 280; // card width
+            // Calculate positioning to show peek of adjacent cards
+            const cardWidth = 240; // card width
             const gap = 16; // gap between cards
             const containerWidth = container.offsetWidth - 40; // minus padding
             const cardWithGap = cardWidth + gap;
             
-            // Center the selected card in the viewport
+            // Position to center the active card while showing peeks
+            // Show about 60px of adjacent cards on each side
+            const peekAmount = 60;
             const centerOffset = (containerWidth - cardWidth) / 2;
-            const translateX = centerOffset - (slideIndex * cardWithGap);
+            const slideDistance = cardWidth - peekAmount; // Distance between slide centers
+            const translateX = centerOffset - (slideIndex * slideDistance);
             
             track.style.transform = `translateX(${translateX}px)`;
             
