@@ -194,8 +194,8 @@
         }
 
         .carousel-card {
-            min-width: 260px;
-            width: 260px;
+            min-width: 220px;
+            width: 220px;
             background: white;
             border-radius: 12px;
             padding: 16px;
@@ -1121,15 +1121,20 @@
             const track = document.getElementById('carouselTrack');
             const indicators = document.querySelectorAll('.indicator');
             const cards = document.querySelectorAll('.carousel-card');
+            const container = document.querySelector('.carousel-container');
             
-            // Simple calculation - show one full card centered with peeks
-            const cardWidth = 260; // card width
+            // Calculate to center active card while showing peeks of both adjacent cards
+            const cardWidth = 220; // card width
             const gap = 12; // gap between cards
-            const slideDistance = cardWidth + gap; // Move one full card + gap
+            const containerWidth = container.offsetWidth - 80; // minus total padding (40px each side)
             
-            // Start with first card showing a bit of padding, then move by full card distances
-            const initialOffset = 20; // Small offset to show peek of previous card when not on first slide
-            const translateX = initialOffset - (slideIndex * slideDistance);
+            // Center the active card in the viewport
+            const centerPosition = (containerWidth - cardWidth) / 2;
+            
+            // Calculate how much we need to move to center the selected card
+            // Each card takes cardWidth + gap space
+            const cardPosition = slideIndex * (cardWidth + gap);
+            const translateX = centerPosition - cardPosition;
             
             track.style.transform = `translateX(${translateX}px)`;
             
