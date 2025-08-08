@@ -249,47 +249,47 @@
             background: #f5f5f5;
         }
 
-        .card-header {
+        .card-indicator {
+            font-size: 12px;
+            font-weight: 500;
+            color: #666;
+            margin-bottom: 8px;
+            background: rgba(255,255,255,0.8);
+            padding: 4px 8px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .card-title {
             font-size: 16px;
             font-weight: 700;
             margin-bottom: 12px;
             color: #333;
+            line-height: 1.3;
         }
 
-        .card-content {
+        .card-info {
             display: flex;
             flex-direction: column;
             gap: 8px;
         }
 
-        .card-row {
+        .info-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+
+        .info-label {
             font-size: 14px;
             color: #666;
+            font-weight: 500;
         }
 
-        .card-row.values {
-            font-weight: 600;
-        }
-
-        .card-row .amount {
-            font-size: 18px;
+        .info-value {
+            font-size: 16px;
             font-weight: 700;
             color: #333;
-        }
-
-        .card-row .rate {
-            font-size: 16px;
-            font-weight: 600;
-            color: #333;
-        }
-
-        .card-footer {
-            font-size: 12px;
-            color: #666;
-            margin-top: 8px;
         }
 
         .slider-container {
@@ -747,66 +747,67 @@
                     <div class="carousel-track" id="carouselTrack">
                         <!-- Card 1 - Adelanta R$15.000 ahora -->
                         <div class="carousel-card card-blue">
-                            <div class="card-header">Adelanta R$15.000 ahora</div>
-                            <div class="card-content">
-                                <div class="card-row">
-                                    <span>Recibes</span>
-                                    <span>Tasa aplicada</span>
+                            <div class="card-indicator">Para tus gastos inmediatos 💸</div>
+                            <div class="card-title">Adelanta R$ 15.000 ahora</div>
+                            <div class="card-info">
+                                <div class="info-row">
+                                    <span class="info-label">Recibes</span>
+                                    <span class="info-value">R$14.750</span>
                                 </div>
-                                <div class="card-row values">
-                                    <span class="amount">R$14.750</span>
-                                    <span class="rate"><s>2,5%</s> 2,1%</span>
+                                <div class="info-row">
+                                    <span class="info-label">Tasa</span>
+                                    <span class="info-value">2,1%</span>
                                 </div>
-                                <div class="card-footer">Descuento en la tasa</div>
                             </div>
                         </div>
 
                         <!-- Card 2 - Adelanta R$ 15.000 en 7 días -->
                         <div class="carousel-card card-purple">
-                            <div class="card-header">Adelanta R$ 15.000 en 7 días</div>
-                            <div class="card-content">
-                                <div class="card-row">
-                                    <span>Recibes</span>
-                                    <span>Tasa calculada</span>
+                            <div class="card-indicator">Para los gastos de fin de mes 💳</div>
+                            <div class="card-title">Adelanta R$ 15.000 en 7 días</div>
+                            <div class="card-info">
+                                <div class="info-row">
+                                    <span class="info-label">Recibes</span>
+                                    <span class="info-value">R$14.800</span>
                                 </div>
-                                <div class="card-row values">
-                                    <span class="amount">R$14.800</span>
-                                    <span class="rate">1,5%</span>
+                                <div class="info-row">
+                                    <span class="info-label">Tasa</span>
+                                    <span class="info-value">1,5%</span>
                                 </div>
-                                <div class="card-footer">Descuento R$3,00</div>
                             </div>
                         </div>
 
                         <!-- Card 3 - Adelanta parcial -->
                         <div class="carousel-card card-green">
-                            <div class="card-header">Adelanta parcial (R$8.000)</div>
-                            <div class="card-content">
-                                <div class="card-row">
-                                    <span>Recibes</span>
-                                    <span>Tasa</span>
+                            <div class="card-indicator">Para tu proveedor 📦</div>
+                            <div class="card-title">Adelanta parcial R$ 8.000</div>
+                            <div class="card-info">
+                                <div class="info-row">
+                                    <span class="info-label">Recibes</span>
+                                    <span class="info-value">R$7.500</span>
                                 </div>
-                                <div class="card-row values">
-                                    <span class="amount">R$7.500</span>
-                                    <span class="rate">1,0%</span>
+                                <div class="info-row">
+                                    <span class="info-label">Tasa</span>
+                                    <span class="info-value">1,0%</span>
                                 </div>
-                                <div class="card-footer">Ahorras R$3,00</div>
                             </div>
                         </div>
 
                         <!-- Card 4 - Personaliza tu adelanto -->
                         <div class="carousel-card card-gray">
-                            <div class="card-header">Personaliza tu adelanto</div>
-                            <div class="card-content">
-                                <div class="card-row">
-                                    <span>Adelantas</span>
-                                    <span style="color: #6c5ce7;">R$9.000</span>
+                            <div class="card-indicator">Para tus necesidades 🎯</div>
+                            <div class="card-title">Personaliza tu adelanto</div>
+                            <div class="card-info">
+                                <div class="info-row">
+                                    <span class="info-label">Adelantas</span>
+                                    <span class="info-value" style="color: #6c5ce7;">R$9.000</span>
                                 </div>
                                 <div class="slider-container">
                                     <input type="range" class="amount-slider" min="1000" max="15000" value="9000" step="500">
                                 </div>
-                                <div class="card-row values">
-                                    <span>Recibes</span>
-                                    <span class="amount" style="color: #6c5ce7;">R$8.700</span>
+                                <div class="info-row">
+                                    <span class="info-label">Recibes</span>
+                                    <span class="info-value" style="color: #6c5ce7;">R$8.700</span>
                                 </div>
                             </div>
                         </div>
@@ -1198,8 +1199,8 @@
         // Slider functionality for personalized card
         document.querySelector('.amount-slider').addEventListener('input', function(e) {
             const value = parseInt(e.target.value);
-            const adelantasValue = document.querySelector('.carousel-card.card-gray .card-row span[style*="color"]');
-            const recibValue = document.querySelector('.carousel-card.card-gray .card-row.values .amount');
+            const adelantasValue = document.querySelector('.carousel-card.card-gray .info-value[style*="color"]:first-of-type');
+            const recibValue = document.querySelector('.carousel-card.card-gray .info-value[style*="color"]:last-of-type');
             
             // Update values (simple calculation for demo)
             const recibAmount = Math.round(value * 0.97); // 3% fee
