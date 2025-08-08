@@ -351,13 +351,40 @@
         .amount-display {
             text-align: center;
             margin-bottom: 24px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
         }
 
         .amount-value {
             font-size: 32px;
             font-weight: 700;
             color: #333;
-            margin-bottom: 8px;
+            margin-bottom: 0;
+        }
+
+        .edit-icon {
+            background: none;
+            border: none;
+            color: #6c5ce7;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s ease;
+        }
+
+        .edit-icon:hover {
+            background-color: rgba(108, 92, 231, 0.1);
+        }
+
+        .edit-icon svg {
+            width: 20px;
+            height: 20px;
         }
 
         .option-selector {
@@ -808,7 +835,7 @@
                 </div>
 
                 <button class="cta-button" id="ctaButton" onclick="showOfferSheet()">
-                    Simular adelanto
+                    Simular
                 </button>
             </div>
 
@@ -1046,6 +1073,12 @@
         <div class="sheet-content">
             <div class="amount-display">
                 <div class="amount-value" id="selectedAmount">R$20.000</div>
+                <button class="edit-icon" onclick="focusOnSlider()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                        <path d="m18.5 2.5 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                    </svg>
+                </button>
             </div>
             
             <div class="option-selector">
@@ -1413,6 +1446,19 @@
                 });
             }
         });
+
+        // Focus on slider when edit icon is clicked
+        function focusOnSlider() {
+            const optionSlider = document.getElementById('optionSlider');
+            if (optionSlider) {
+                optionSlider.focus();
+                // Add a subtle animation to indicate focus
+                optionSlider.style.boxShadow = '0 0 0 3px rgba(108, 92, 231, 0.2)';
+                setTimeout(() => {
+                    optionSlider.style.boxShadow = '';
+                }, 1000);
+            }
+        }
     </script>
 </body>
 </html>
