@@ -450,8 +450,15 @@
         .value-group {
             display: flex;
             flex-direction: column;
-            align-items: center;
             gap: 2px;
+        }
+
+        .value-group:first-child {
+            align-items: flex-start;
+        }
+
+        .value-group:last-child {
+            align-items: flex-end;
         }
 
         .value-group .min-value,
