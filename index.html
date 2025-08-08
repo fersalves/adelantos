@@ -85,15 +85,16 @@
             color: #333;
         }
 
-        .input-group {
-            margin-bottom: 20px;
+        .module-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 8px;
+            margin-top: 0;
         }
 
-        .input-label {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 8px;
-            display: block;
+        .input-group {
+            margin-bottom: 20px;
         }
 
         .input-field {
@@ -537,9 +538,9 @@
 
 
             <!-- Input Module -->
+            <h3 class="module-title">¿Cuánto necesitas adelantar?</h3>
             <div class="simulator-card">
                 <div class="input-group">
-                    <label class="input-label">¿Cuánto necesitas adelantar?</label>
                     <input type="text" class="input-field" id="amountInput" placeholder="Ingresa para el valor" onInput="handleInputChange(this)">
                 </div>
 
@@ -549,9 +550,8 @@
             </div>
 
             <!-- Credit Simulator -->
+            <h3 class="module-title">Simulador de cenários</h3>
             <div class="simulator-card">
-                <div class="card-title">Simulador de cenários</div>
-                
                 <!-- Credit Options -->
                 <div style="margin-bottom: 20px;">
                     <div class="credit-option" onclick="selectCredit(15000)">
@@ -577,9 +577,8 @@
             </div>
 
             <!-- Automation Section -->
+            <h3 class="module-title">Automatiza tus adelantos</h3>
             <div class="automation-card">
-                <div class="card-title">Automatiza tus adelantos</div>
-                
                 <div class="toggle-switch">
                     <div class="toggle-content">
                         <div class="toggle-title">Sistema activo</div>
@@ -607,8 +606,8 @@
                 <div class="nav-tab active">L2</div>
             </div>
 
+            <h3 class="module-title">Reglas de automatización</h3>
             <div class="automation-card">
-                <div class="card-title">Reglas de automatización</div>
                 
                 <div class="toggle-switch">
                     <div class="toggle-content">
@@ -676,8 +675,8 @@
             </div>
 
             <!-- Calendar Section for L2 -->
+            <h3 class="module-title">Próximos 7 días</h3>
             <div class="automation-card">
-                <div class="card-title">Próximos 7 días</div>
                 <div style="font-size: 14px; color: #666; margin-bottom: 16px;">Período de flujo de caixa</div>
                 
                 <div style="display: flex; gap: 8px; margin-bottom: 16px;">
