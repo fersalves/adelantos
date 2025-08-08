@@ -16,6 +16,9 @@
             background: #f5f5f5;
             height: 100vh;
             overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
         }
 
         /* Main Container */
@@ -23,29 +26,40 @@
             display: flex;
             height: 100vh;
             position: relative;
+            width: 360px;
+            max-width: 360px;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
         }
 
         /* L1 - Main Screen */
         .main-screen {
             flex: 1;
             background: #e8e8e8;
-            padding: 20px;
+            padding: 16px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 16px;
             overflow-y: auto;
+            width: 100%;
         }
 
         /* L2 - Secondary Screen */
         .secondary-screen {
-            width: 400px;
+            width: 360px;
             background: #e8e8e8;
-            padding: 20px;
+            padding: 16px;
             border-left: 1px solid #ccc;
             display: none;
             flex-direction: column;
-            gap: 20px;
+            gap: 16px;
             overflow-y: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 100;
         }
 
         .secondary-screen.visible {
@@ -525,12 +539,21 @@
 
         /* Mobile Responsive */
         @media (max-width: 768px) {
+            body {
+                padding: 0;
+                margin: 0;
+            }
+            
             .app-container {
+                width: 360px;
+                max-width: 360px;
                 flex-direction: column;
+                border: none;
+                box-shadow: none;
             }
 
             .secondary-screen {
-                width: 100%;
+                width: 360px;
                 border-left: none;
                 border-top: 1px solid #ccc;
             }
