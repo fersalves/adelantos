@@ -182,19 +182,20 @@
             margin-bottom: 16px;
             margin-left: -20px;
             margin-right: -20px;
-            padding-left: 20px;
-            padding-right: 20px;
+            padding-left: 40px;
+            padding-right: 40px;
         }
 
         .carousel-track {
             display: flex;
             transition: transform 0.3s ease;
-            gap: 16px;
+            gap: 12px;
             padding-left: 0;
         }
 
         .carousel-card {
-            min-width: 240px;
+            min-width: 260px;
+            width: 260px;
             background: white;
             border-radius: 12px;
             padding: 16px;
@@ -1120,20 +1121,15 @@
             const track = document.getElementById('carouselTrack');
             const indicators = document.querySelectorAll('.indicator');
             const cards = document.querySelectorAll('.carousel-card');
-            const container = document.querySelector('.carousel-container');
             
-            // Calculate positioning to show peek of adjacent cards
-            const cardWidth = 240; // card width
-            const gap = 16; // gap between cards
-            const containerWidth = container.offsetWidth - 40; // minus padding
-            const cardWithGap = cardWidth + gap;
+            // Simple calculation - show one full card centered with peeks
+            const cardWidth = 260; // card width
+            const gap = 12; // gap between cards
+            const slideDistance = cardWidth + gap; // Move one full card + gap
             
-            // Position to center the active card while showing peeks
-            // Show about 60px of adjacent cards on each side
-            const peekAmount = 60;
-            const centerOffset = (containerWidth - cardWidth) / 2;
-            const slideDistance = cardWidth - peekAmount; // Distance between slide centers
-            const translateX = centerOffset - (slideIndex * slideDistance);
+            // Start with first card showing a bit of padding, then move by full card distances
+            const initialOffset = 20; // Small offset to show peek of previous card when not on first slide
+            const translateX = initialOffset - (slideIndex * slideDistance);
             
             track.style.transform = `translateX(${translateX}px)`;
             
