@@ -180,16 +180,19 @@
             position: relative;
             overflow: hidden;
             margin-bottom: 16px;
+            padding-left: 16px;
+            padding-right: 16px;
         }
 
         .carousel-track {
             display: flex;
             transition: transform 0.3s ease;
             gap: 16px;
+            padding-left: 0;
         }
 
         .carousel-card {
-            min-width: 280px;
+            min-width: 240px;
             background: white;
             border-radius: 12px;
             padding: 16px;
@@ -311,6 +314,11 @@
 
         .indicator.active {
             background: #6c5ce7;
+        }
+
+        /* Peek effect styling */
+        .carousel-card {
+            transition: opacity 0.3s ease, transform 0.3s ease;
         }
 
 
@@ -1109,16 +1117,32 @@
         function goToSlide(slideIndex) {
             const track = document.getElementById('carouselTrack');
             const indicators = document.querySelectorAll('.indicator');
+            const cards = document.querySelectorAll('.carousel-card');
             
             // Calculate transform based on card width + gap
-            const cardWidth = 280 + 16; // card width + gap
-            const translateX = -slideIndex * cardWidth;
+            // Cards are 240px + 16px gap = 256px per slide
+            // But we want to show a peek of next cards, so we move less
+            const cardWidth = 240 + 16; // card width + gap
+            const peekAmount = 40; // Show 40px of next card
+            const slideDistance = cardWidth - peekAmount;
+            const translateX = -slideIndex * slideDistance;
             
             track.style.transform = `translateX(${translateX}px)`;
             
             // Update indicators
             indicators.forEach((indicator, index) => {
                 indicator.classList.toggle('active', index === slideIndex);
+            });
+            
+            // Update card styling - make active card prominent
+            cards.forEach((card, index) => {
+                if (index === slideIndex) {
+                    card.style.opacity = '1';
+                    card.style.transform = 'scale(1)';
+                } else {
+                    card.style.opacity = '0.7';
+                    card.style.transform = 'scale(0.95)';
+                }
             });
             
             currentSlide = slideIndex;
@@ -1142,18 +1166,22 @@
             recibValue.textContent = `R$${recibAmount.toLocaleString('pt-BR')}`;
         });
 
-        // Touch/swipe support for mobile
+        // Touch/swipe and drag support
         let startX = 0;
         let startY = 0;
         let isScrolling = false;
+        let isDragging = false;
 
-        document.querySelector('.carousel-container').addEventListener('touchstart', function(e) {
+        const carouselContainer = document.querySelector('.carousel-container');
+
+        // Touch events (mobile)
+        carouselContainer.addEventListener('touchstart', function(e) {
             startX = e.touches[0].clientX;
             startY = e.touches[0].clientY;
             isScrolling = false;
         });
 
-        document.querySelector('.carousel-container').addEventListener('touchmove', function(e) {
+        carouselContainer.addEventListener('touchmove', function(e) {
             if (!startX || !startY) return;
 
             let diffX = startX - e.touches[0].clientX;
@@ -1165,7 +1193,7 @@
             }
         });
 
-        document.querySelector('.carousel-container').addEventListener('touchend', function(e) {
+        carouselContainer.addEventListener('touchend', function(e) {
             if (!isScrolling) return;
 
             let endX = e.changedTouches[0].clientX;
@@ -1184,6 +1212,56 @@
             startX = 0;
             startY = 0;
             isScrolling = false;
+        });
+
+        // Mouse events (desktop drag)
+        carouselContainer.addEventListener('mousedown', function(e) {
+            startX = e.clientX;
+            isDragging = true;
+            carouselContainer.style.cursor = 'grabbing';
+            e.preventDefault(); // Prevent text selection
+        });
+
+        carouselContainer.addEventListener('mousemove', function(e) {
+            if (!isDragging) return;
+            e.preventDefault();
+        });
+
+        carouselContainer.addEventListener('mouseup', function(e) {
+            if (!isDragging) return;
+
+            let endX = e.clientX;
+            let diffX = startX - endX;
+
+            if (Math.abs(diffX) > 50) { // Minimum drag distance
+                if (diffX > 0 && currentSlide < totalSlides - 1) {
+                    // Drag left - next slide
+                    goToSlide(currentSlide + 1);
+                } else if (diffX < 0 && currentSlide > 0) {
+                    // Drag right - previous slide
+                    goToSlide(currentSlide - 1);
+                }
+            }
+
+            isDragging = false;
+            carouselContainer.style.cursor = 'grab';
+            startX = 0;
+        });
+
+        carouselContainer.addEventListener('mouseleave', function(e) {
+            if (isDragging) {
+                isDragging = false;
+                carouselContainer.style.cursor = 'grab';
+                startX = 0;
+            }
+        });
+
+        // Set initial cursor
+        carouselContainer.style.cursor = 'grab';
+
+        // Initialize carousel on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            goToSlide(0); // Set first slide as active
         });
     </script>
 </body>
