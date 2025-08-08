@@ -1087,10 +1087,10 @@
                     <span class="option-label">Dinero Plus</span>
                 </div>
                 <div class="slider-container-sheet">
-                    <input type="range" class="option-slider" id="optionSlider" min="15000" max="50000" value="20000" step="1000">
+                    <input type="range" class="option-slider" id="optionSlider" min="0" max="20000" value="10000" step="1000">
                     <div class="slider-values">
-                        <span class="min-value">R$15.000</span>
-                        <span class="max-value">R$5.000</span>
+                        <span class="min-value" id="adelantoValue">R$10.000</span>
+                        <span class="max-value" id="dineroValue">R$10.000</span>
                     </div>
                 </div>
             </div>
@@ -1428,21 +1428,23 @@
             const optionSlider = document.getElementById('optionSlider');
             const selectedAmount = document.getElementById('selectedAmount');
             const obtenerButton = document.getElementById('obtenerButton');
-            const minValue = document.querySelector('.min-value');
-            const maxValue = document.querySelector('.max-value');
+            const adelantoValue = document.getElementById('adelantoValue');
+            const dineroValue = document.getElementById('dineroValue');
+            
+            const totalAmount = 20000; // Fixed total amount
 
             if (optionSlider) {
                 optionSlider.addEventListener('input', function(e) {
-                    const totalValue = parseInt(e.target.value);
-                    const adelantoValue = Math.min(totalValue, 15000); // Max 15k for adelanto
-                    const dineroPlus = totalValue - adelantoValue;
+                    const dineroAmount = parseInt(e.target.value); // Slider value represents Dinero Plus
+                    const adelantoAmount = totalAmount - dineroAmount; // Remaining goes to Adelanto
                     
-                    selectedAmount.textContent = `R$${totalValue.toLocaleString('pt-BR')}`;
-                    obtenerButton.textContent = `Obtener ${totalValue.toLocaleString('pt-BR')}`;
+                    // Update displayed values
+                    adelantoValue.textContent = `R$${adelantoAmount.toLocaleString('pt-BR')}`;
+                    dineroValue.textContent = `R$${dineroAmount.toLocaleString('pt-BR')}`;
                     
-                    // Update min/max values to show the split
-                    minValue.textContent = `R$${adelantoValue.toLocaleString('pt-BR')}`;
-                    maxValue.textContent = `R$${dineroPlus.toLocaleString('pt-BR')}`;
+                    // Keep total amount the same
+                    selectedAmount.textContent = `R$${totalAmount.toLocaleString('pt-BR')}`;
+                    obtenerButton.textContent = `Obtener ${totalAmount.toLocaleString('pt-BR')}`;
                 });
             }
         });
