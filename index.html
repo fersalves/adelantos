@@ -587,6 +587,55 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
+        .automation-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .automation-item:last-of-type {
+            border-bottom: none;
+            margin-bottom: 16px;
+        }
+
+        .automation-content {
+            flex: 1;
+        }
+
+        .automation-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .automation-status {
+            margin-top: 4px;
+        }
+
+        .status-pill {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .status-pill.active {
+            background: #4caf50;
+            color: white;
+        }
+
+        .config-link {
+            text-align: center;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid #f0f0f0;
+        }
+
         .toggle-switch {
             display: flex;
             align-items: center;
@@ -930,20 +979,34 @@
             <!-- Automation Section -->
             <h3 class="module-title">Adelantos automáticos</h3>
             <div class="automation-card">
-                <div class="toggle-switch">
-                    <div class="toggle-content">
-                        <div class="toggle-title">Sistema activo</div>
+                <div class="automation-item">
+                    <div class="automation-content">
+                        <div class="automation-title">Para emergencias</div>
+                        <div class="automation-status">
+                            <span class="status-pill active">ACTIVO</span>
+                        </div>
                     </div>
                     <div class="switch active" onclick="toggleSwitch(this)">
                         <div class="switch-handle"></div>
                     </div>
                 </div>
 
-                <div style="display: flex; align-items: center; gap: 12px; margin-top: 16px; padding: 12px; background: #f8f9fa; border-radius: 8px;">
-                    <span style="font-size: 14px; color: #666;">Revisa tu automatización</span>
-                    <div style="width: 32px; height: 32px; border-radius: 50%; background: #e3f2fd; display: flex; align-items: center; justify-content: center; cursor: pointer;" onclick="showSecondaryScreen()">
-                        <span style="font-size: 16px; color: #2196f3;">⚙️</span>
+                <div class="automation-item">
+                    <div class="automation-content">
+                        <div class="automation-title">Tasas más bajas</div>
+                        <div class="automation-status">
+                            <span class="status-pill active">ACTIVO</span>
+                        </div>
                     </div>
+                    <div class="switch active" onclick="toggleSwitch(this)">
+                        <div class="switch-handle"></div>
+                    </div>
+                </div>
+
+                <div class="config-link">
+                    <a href="#" onclick="showSecondaryScreen()" style="text-decoration: none; color: #6c5ce7; font-weight: 600; font-size: 14px;">
+                        Cambiar configuración ⚙️
+                    </a>
                 </div>
             </div>
 
