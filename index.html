@@ -85,12 +85,38 @@
             color: #333;
         }
 
+        .page-header {
+            margin-bottom: 24px;
+        }
+
+        .page-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            margin: 0 0 4px 0;
+        }
+
+        .page-subtitle {
+            font-size: 16px;
+            font-weight: 400;
+            color: #666;
+            margin: 0 0 0 0;
+        }
+
         .module-title {
             font-size: 18px;
             font-weight: 700;
             color: #333;
             margin-bottom: 2px;
             margin-top: 0;
+        }
+
+        .availability-indicator {
+            font-size: 14px;
+            font-weight: 500;
+            color: #666;
+            margin-bottom: 12px;
+            padding: 8px 0;
         }
 
         .input-group {
@@ -692,13 +718,20 @@
     <div class="app-container">
         <!-- L1 - Main Screen -->
         <div class="main-screen">
-
+            <!-- Page Title -->
+            <div class="page-header">
+                <h1 class="page-title">Tus adelantos</h1>
+                <p class="page-subtitle">Obtén hoy el dinero de tus ventas</p>
+            </div>
 
             <!-- Input Module -->
             <h3 class="module-title">¿Cuánto dinero necesitas?</h3>
             <div class="simulator-card">
+                <div class="availability-indicator">
+                    Disponible hasta $ 50.000
+                </div>
                 <div class="input-group">
-                    <input type="text" class="input-field" id="amountInput" placeholder="Ingresa el valor" onInput="handleInputChange(this)">
+                    <input type="text" class="input-field" id="amountInput" placeholder="Ingresa un monto" onInput="handleInputChange(this)">
                 </div>
 
                 <button class="cta-button" id="ctaButton" onclick="showOfferSheet()">
@@ -789,7 +822,7 @@
                 </div>
 
                 <button class="action-button primary" style="margin-top: 20px;" onclick="showAdditionalOptions()">
-                    Adelantar
+                    Programar adelanto
                 </button>
             </div>
 
