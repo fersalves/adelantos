@@ -576,10 +576,8 @@
                 <div class="nav-tab" data-tab="L2" onclick="showSecondaryScreen()">L2</div>
             </div>
 
-            <!-- Credit Simulator -->
+            <!-- Input Module -->
             <div class="simulator-card">
-                <div class="card-title">Simulador de cenários</div>
-                
                 <div class="input-group">
                     <label class="input-label">¿Cuánto necesitas adelantar?</label>
                     <input type="text" class="input-field" id="amountInput" placeholder="Ingresa para el valor" onInput="handleInputChange(this)">
@@ -588,9 +586,14 @@
                 <button class="cta-button" id="ctaButton" onclick="showOfferSheet()">
                     Simular adelanto
                 </button>
+            </div>
 
+            <!-- Credit Simulator -->
+            <div class="simulator-card">
+                <div class="card-title">Simulador de cenários</div>
+                
                 <!-- Credit Options -->
-                <div style="margin-top: 20px;">
+                <div style="margin-bottom: 20px;">
                     <div class="credit-option" onclick="selectCredit(15000)">
                         <div>
                             <div class="amount">Adelanta R$ 15.000 en 7 días</div>
