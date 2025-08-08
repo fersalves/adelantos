@@ -347,6 +347,82 @@
             transition: opacity 0.3s ease, transform 0.3s ease;
         }
 
+        /* Simulator Bottom Sheet Styles */
+        .amount-display {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .amount-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .option-selector {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .option-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .option-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .slider-container-sheet {
+            position: relative;
+        }
+
+        .option-slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: #ddd;
+            outline: none;
+            -webkit-appearance: none;
+            margin-bottom: 12px;
+        }
+
+        .option-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #6c5ce7;
+            cursor: pointer;
+            border: 3px solid white;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+
+        .option-slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #6c5ce7;
+            cursor: pointer;
+            border: 3px solid white;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+
+        .slider-values {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #6c5ce7;
+            font-weight: 600;
+        }
+
 
 
         /* Bottom Sheets */
@@ -963,33 +1039,31 @@
     <!-- Bottom Sheet Overlay -->
     <div class="bottom-sheet-overlay" id="bottomSheetOverlay" onclick="hideBottomSheets()"></div>
 
-    <!-- Offer Available Bottom Sheet -->
+    <!-- Simulator Bottom Sheet -->
     <div class="bottom-sheet" id="offerSheet">
         <div class="sheet-handle"></div>
-        <div class="sheet-title">Oferta disponible</div>
+        <div class="sheet-title">¿Cuánto dinero necesitas?</div>
         <div class="sheet-content">
-            <p style="font-size: 14px; color: #666; text-align: center; margin-bottom: 20px;">
-                Tienes 15.000 disponible para adelantar y puedes tomar un préstamo de $ 250
-            </p>
-
-            <div class="offer-card highlight">
-                <div class="offer-amount">Adelanta R$15.000 ahora</div>
-                <div class="offer-details">Recibes</div>
-                <div class="offer-details">R$14.750</div>
-                <div class="offer-rate">Taxa aplicada 1,5%</div>
+            <div class="amount-display">
+                <div class="amount-value" id="selectedAmount">R$20.000</div>
+            </div>
+            
+            <div class="option-selector">
+                <div class="option-labels">
+                    <span class="option-label">Adelanto</span>
+                    <span class="option-label">Dinero Plus</span>
+                </div>
+                <div class="slider-container-sheet">
+                    <input type="range" class="option-slider" id="optionSlider" min="15000" max="50000" value="20000" step="1000">
+                    <div class="slider-values">
+                        <span class="min-value">R$15.000</span>
+                        <span class="max-value">R$5.000</span>
+                    </div>
+                </div>
             </div>
 
-            <div style="text-align: center; margin: 16px 0; font-size: 18px; font-weight: 600;">
-                +
-            </div>
-
-            <div class="offer-card">
-                <div class="offer-details">Obtén un préstamo de dinero express de</div>
-                <div class="offer-amount">R$5.250</div>
-            </div>
-
-            <button class="action-button primary" onclick="showConfirmationSheet()">
-                Obtener R$20.000
+            <button class="action-button primary" onclick="showConfirmationSheet()" id="obtenerButton">
+                Obtener 20.000
             </button>
         </div>
     </div>
@@ -1314,6 +1388,30 @@
         // Initialize carousel on page load
         document.addEventListener('DOMContentLoaded', function() {
             goToSlide(0); // Set first slide as active
+        });
+
+        // Simulator Bottom Sheet functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const optionSlider = document.getElementById('optionSlider');
+            const selectedAmount = document.getElementById('selectedAmount');
+            const obtenerButton = document.getElementById('obtenerButton');
+            const minValue = document.querySelector('.min-value');
+            const maxValue = document.querySelector('.max-value');
+
+            if (optionSlider) {
+                optionSlider.addEventListener('input', function(e) {
+                    const totalValue = parseInt(e.target.value);
+                    const adelantoValue = Math.min(totalValue, 15000); // Max 15k for adelanto
+                    const dineroPlus = totalValue - adelantoValue;
+                    
+                    selectedAmount.textContent = `R$${totalValue.toLocaleString('pt-BR')}`;
+                    obtenerButton.textContent = `Obtener ${totalValue.toLocaleString('pt-BR')}`;
+                    
+                    // Update min/max values to show the split
+                    minValue.textContent = `R$${adelantoValue.toLocaleString('pt-BR')}`;
+                    maxValue.textContent = `R$${dineroPlus.toLocaleString('pt-BR')}`;
+                });
+            }
         });
     </script>
 </body>
