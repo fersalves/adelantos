@@ -684,6 +684,100 @@
             border-top: 1px solid #f0f0f0;
         }
 
+        /* Rule Cards */
+        .rule-card {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .rule-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .rule-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+        }
+
+        .rule-condition, .rule-action {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .rule-condition:last-child, .rule-action:last-child {
+            margin-bottom: 0;
+        }
+
+        .rule-input-group {
+            margin-top: 12px;
+        }
+
+        .rule-input-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .rule-input-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .rule-input-row label {
+            font-size: 14px;
+            color: #333;
+            min-width: 70px;
+        }
+
+        .rule-input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            background: white;
+        }
+
+        .rule-input:focus {
+            outline: none;
+            border-color: #6c5ce7;
+        }
+
+        .new-rule-button {
+            margin-top: 16px;
+        }
+
+        .add-rule-btn {
+            width: 100%;
+            padding: 12px 16px;
+            background: #f5f5f5;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .add-rule-btn:hover {
+            background: #e9ecef;
+            border-color: #adb5bd;
+        }
+
         .toggle-switch {
             display: flex;
             align-items: center;
@@ -1079,72 +1173,84 @@
                 </button>
             </div>
 
-            <h3 class="module-title">Reglas de automatización</h3>
-            <div class="automation-card">
-                
-                <div class="toggle-switch">
-                    <div class="toggle-content">
-                        <div class="toggle-title">Emergencia crítica</div>
-                        <div class="toggle-description">Se: saldo negativo en 48h<br>Entonces: Adelantar el mínimo necesario</div>
-                    </div>
+            <h3 class="module-title">Configura tus adelantos</h3>
+            
+            <!-- Para emergencias -->
+            <div class="rule-card">
+                <div class="rule-header">
+                    <h4 class="rule-title">Para emergencias</h4>
                     <div class="switch active" onclick="toggleSwitch(this)">
                         <div class="switch-handle"></div>
                     </div>
                 </div>
+                <div class="rule-condition">
+                    <strong>Si:</strong> mi dinero en cuenta es $ 0
+                </div>
+                <div class="rule-action">
+                    <strong>Entonces:</strong> adelanta el total disponible
+                </div>
+            </div>
 
-                <div class="toggle-switch">
-                    <div class="toggle-content">
-                        <div class="toggle-title">Oportunidad de tasa</div>
-                        <div class="toggle-description">Se: tasa menor a 1,5%<br>Entonces: Sugerir adelanto</div>
-                    </div>
+            <!-- Tasa más bajas -->
+            <div class="rule-card">
+                <div class="rule-header">
+                    <h4 class="rule-title">Tasa más bajas</h4>
                     <div class="switch active" onclick="toggleSwitch(this)">
                         <div class="switch-handle"></div>
                     </div>
                 </div>
+                <div class="rule-condition">
+                    <strong>Si:</strong> la tasa es menor a 1,5%
+                </div>
+                <div class="rule-action">
+                    <strong>Entonces:</strong> notificame del adelanto
+                </div>
+            </div>
 
-                <div class="toggle-switch">
-                    <div class="toggle-content">
-                        <div class="toggle-title">Pagamento programado</div>
-                        <div class="toggle-description">Se: hay una cuenta que vence en 3 días<br>Entonces: Adelantar valor de la cuenta</div>
-                    </div>
+            <!-- Pagos programados -->
+            <div class="rule-card">
+                <div class="rule-header">
+                    <h4 class="rule-title">Pagos programados</h4>
                     <div class="switch" onclick="toggleSwitch(this)">
                         <div class="switch-handle"></div>
                     </div>
                 </div>
+                <div class="rule-condition">
+                    <strong>Si:</strong> hay una cuenta que vence en 3 días
+                </div>
+                <div class="rule-action">
+                    <strong>Entonces:</strong> adelanta el valor de la cuenta
+                </div>
+            </div>
 
-                <div style="border-top: 1px solid #eee; padding-top: 16px; margin-top: 16px;">
-                    <div class="toggle-title" style="margin-bottom: 12px;">Personaliza tu regla</div>
-                    
-                    <div class="toggle-switch">
-                        <div class="toggle-content">
-                            <div class="toggle-title">Nombre de la regla ✏️</div>
-                            <div class="form-row">
-                                <div class="form-field">
-                                    <label style="font-size: 12px; color: #666;">Se:</label>
-                                    <input type="text" class="form-input" placeholder="">
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-field">
-                                    <label style="font-size: 12px; color: #666;">Entonces:</label>
-                                    <input type="text" class="form-input" placeholder="">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="switch" onclick="toggleSwitch(this)">
-                            <div class="switch-handle"></div>
-                        </div>
-                    </div>
-
-                    <div class="form-row" style="margin-top: 12px;">
-                        <div class="form-field">
-                            <select class="form-select">
-                                <option>Nueva regla</option>
-                                <option>Regla existente</option>
-                            </select>
-                        </div>
+            <!-- Personaliza tu regla -->
+            <h4 style="font-size: 18px; font-weight: 700; color: #333; margin: 24px 0 16px 0;">Personaliza tu regla</h4>
+            
+            <div class="rule-card">
+                <div class="rule-header">
+                    <h4 class="rule-title">Nombre de la regla ✏️</h4>
+                    <div class="switch" onclick="toggleSwitch(this)">
+                        <div class="switch-handle"></div>
                     </div>
                 </div>
+                <div class="rule-input-group">
+                    <div class="rule-input-row">
+                        <label><strong>Se:</strong></label>
+                        <input type="text" class="rule-input" placeholder="">
+                    </div>
+                    <div class="rule-input-row">
+                        <label><strong>Entonces:</strong></label>
+                        <input type="text" class="rule-input" placeholder="">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nueva regla button -->
+            <div class="new-rule-button">
+                <button class="add-rule-btn">
+                    Nueva regla
+                    <span style="font-size: 18px; margin-left: 8px;">+</span>
+                </button>
             </div>
 
 
