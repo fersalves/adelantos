@@ -71,11 +71,10 @@
 
         .icon-button:hover {
             background-color: #E0E0E0;
-            transform: scale(1.05);
         }
 
         .icon-button:active {
-            transform: scale(0.95);
+            background-color: #D0D0D0;
         }
 
         .notification-badge {
@@ -146,8 +145,7 @@
         }
 
         .edit-button {
-            width: 32px;
-            height: 32px;
+            padding: 8px;
             background-color: rgba(78, 74, 232, 0.08);
             border: none;
             cursor: pointer;
@@ -158,13 +156,16 @@
             transition: all 0.2s;
         }
 
+        .edit-button svg {
+            width: 16px;
+            height: 16px;
+        }
+
         .edit-button:hover {
             background-color: rgba(78, 74, 232, 0.15);
-            transform: scale(1.05);
         }
 
         .edit-button:active {
-            transform: scale(0.95);
             background-color: rgba(78, 74, 232, 0.2);
         }
 
@@ -189,12 +190,10 @@
 
         .action-button:hover {
             background-color: #3E3AD8;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(78, 74, 232, 0.4);
         }
 
         .action-button:active {
-            transform: translateY(0);
+            background-color: #2E2AC8;
         }
 
         /* SVG Icons */
