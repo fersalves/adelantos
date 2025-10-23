@@ -131,6 +131,12 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
+            transition: margin-bottom 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            margin-bottom: 0;
+        }
+
+        .expanded .card-header {
+            margin-bottom: 0;
         }
 
         .card-content {
@@ -138,6 +144,12 @@
             flex-direction: column;
             gap: 4px;
             flex: 1;
+            transition: min-height 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            min-height: 80px;
+        }
+
+        .expanded .card-content {
+            min-height: 0;
         }
 
         .card-title {
@@ -145,12 +157,32 @@
             font-weight: 400;
             color: rgba(0, 0, 0, 0.9);
             line-height: 28px;
+            transition: opacity 0.3s ease, transform 0.3s ease, max-height 0.3s ease, margin 0.3s ease;
+            max-height: 28px;
+            margin-bottom: 4px;
+        }
+
+        .expanded .card-title {
+            opacity: 0;
+            transform: translateY(-10px);
+            pointer-events: none;
+            max-height: 0;
+            margin-bottom: 0;
         }
 
         .amount-container {
             display: flex;
             align-items: baseline;
             gap: 8px;
+            transition: opacity 0.3s ease, transform 0.3s ease, max-height 0.3s ease;
+            max-height: 50px;
+        }
+
+        .expanded .amount-container {
+            opacity: 0;
+            transform: translateY(-10px);
+            pointer-events: none;
+            max-height: 0;
         }
 
         .currency {
