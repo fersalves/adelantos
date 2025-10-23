@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adelantos - Ofertas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .phone-frame {
+            width: 360px;
+            height: 780px;
+            background-color: #f7f7f7;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .screen {
+            width: 100%;
+            height: 100%;
+            padding: 20px 16px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+        }
+
+        .header-left, .header-right {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .icon-button {
+            width: 40px;
+            height: 40px;
+            background-color: #EFEFEF;
+            border: none;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .icon-button:hover {
+            background-color: #E0E0E0;
+            transform: scale(1.05);
+        }
+
+        .icon-button:active {
+            transform: scale(0.95);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background-color: #F23D4F;
+            color: white;
+            font-size: 8px;
+            font-weight: 600;
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Content */
+        .content {
+            flex: 1;
+        }
+
+        .greeting {
+            font-size: 16px;
+            font-weight: 400;
+            color: rgba(0, 0, 0, 0.9);
+            margin-bottom: 16px;
+            line-height: 20px;
+        }
+
+        /* Money Card - Smooth Expandable (inspired by Cult UI) */
+        .money-card {
+            background-color: #FFFFFF;
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            overflow: hidden;
+            will-change: transform, box-shadow;
+        }
+
+        .money-card:hover:not(.expanded) {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px) scale(1.01);
+        }
+
+        .money-card.expanded {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            transform: scale(1.02);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            transition: margin-bottom 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            margin-bottom: 0;
+        }
+
+        .expanded .card-header {
+            margin-bottom: 0;
+        }
+
+        .card-content {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            flex: 1;
+            transition: min-height 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            min-height: 80px;
+        }
+
+        .expanded .card-content {
+            min-height: 0;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 400;
+            color: rgba(0, 0, 0, 0.9);
+            line-height: 28px;
+            transition: opacity 0.3s ease, transform 0.3s ease, max-height 0.3s ease, margin 0.3s ease;
+            max-height: 28px;
+            margin-bottom: 4px;
+        }
+
+        .expanded .card-title {
+            opacity: 0;
+            transform: translateY(-10px);
+            pointer-events: none;
+            max-height: 0;
+            margin-bottom: 0;
+        }
+
+        .amount-container {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            transition: opacity 0.3s ease, transform 0.3s ease, max-height 0.3s ease;
+            max-height: 50px;
+        }
+
+        .expanded .amount-container {
+            opacity: 0;
+            transform: translateY(-10px);
+            pointer-events: none;
+            max-height: 0;
+        }
+
+        .currency {
+            font-size: 12px;
+            font-weight: 600;
+            color: #252537;
+            line-height: 16px;
+        }
+
+        .amount {
+            font-size: 32px;
+            font-weight: 600;
+            color: #252537;
+            line-height: 40px;
+        }
+
+        .card-icon {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .card-icon svg {
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .expanded .card-icon svg {
+            transform: rotate(180deg) scale(1.1);
+        }
+
+        .expanded .card-icon {
+            transform: scale(1.05);
+        }
+
+        /* Expanded Content - Smooth animations with blur effect */
+        .card-expanded-content {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            filter: blur(8px);
+            transform: translateY(-10px);
+            transition: 
+                max-height 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+                opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                filter 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+                margin-top 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .card-expanded-content.show {
+            max-height: 500px;
+            opacity: 1;
+            filter: blur(0px);
+            transform: translateY(0);
+            margin-top: 24px;
+        }
+
+        .expanded-section {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Stagger animation for info rows */
+        .info-row {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            opacity: 0;
+            transform: translateY(10px) scale(0.95);
+            transition: 
+                opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .show .info-row {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* Stagger delays */
+        .show .info-row:nth-child(1) {
+            transition-delay: 0.1s;
+        }
+
+        .show .info-row:nth-child(2) {
+            transition-delay: 0.2s;
+        }
+
+        .show .info-row:nth-child(3) {
+            transition-delay: 0.3s;
+        }
+
+        .show .info-row:nth-child(4) {
+            transition-delay: 0.4s;
+        }
+
+        .info-row-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-label {
+            font-size: 16px;
+            font-weight: 400;
+            color: rgba(0, 0, 0, 0.9);
+            line-height: 28px;
+        }
+
+        .info-amount {
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
+            transform-origin: left center;
+        }
+
+        .info-amount .currency {
+            font-size: 20px;
+            line-height: 24px;
+            display: inline-block;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .info-amount .amount {
+            font-size: 20px;
+            line-height: 24px;
+            display: inline-block;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .show .info-amount .currency {
+            animation: bounceIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .show .info-amount .amount {
+            animation: bounceIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s;
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0.3) rotate(-5deg);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.05) rotate(2deg);
+            }
+            70% {
+                transform: scale(0.95) rotate(-1deg);
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+
+        .edit-icon, .help-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            opacity: 0;
+            transform: scale(0.8) rotate(-10deg);
+        }
+
+        .show .edit-icon, .show .help-icon {
+            opacity: 1;
+            transform: scale(1) rotate(0deg);
+        }
+
+        .show .edit-icon {
+            transition-delay: 0.15s;
+        }
+
+        .show .help-icon {
+            transition-delay: 0.25s;
+        }
+
+        .edit-icon:hover, .help-icon:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+            transform: scale(1.15) rotate(5deg);
+        }
+
+        .edit-icon:active, .help-icon:active {
+            transform: scale(0.95) rotate(0deg);
+        }
+
+        .terms-text {
+            font-size: 10px;
+            line-height: 12px;
+            color: #282834;
+            text-align: center;
+            margin-top: 8px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: 
+                opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .show .terms-text {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.45s;
+        }
+
+        .terms-text a {
+            text-decoration: underline;
+            color: #282834;
+            transition: color 0.2s ease;
+        }
+
+        .terms-text a:hover {
+            color: #4E4AE8;
+        }
+
+        .confirm-button {
+            width: 100%;
+            padding: 14px 24px;
+            background-color: #4E4AE8;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            margin-top: 8px;
+            opacity: 0;
+            transform: translateY(20px) scale(0.9);
+        }
+
+        .show .confirm-button {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            transition-delay: 0.5s;
+        }
+
+        .confirm-button:hover {
+            background-color: #3E3AD8;
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 6px 20px rgba(78, 74, 232, 0.4);
+        }
+
+        .confirm-button:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .final-amount {
+            font-size: 32px !important;
+        }
+
+        /* Spring-like animation for card header when expanding */
+        .money-card.expanded .card-header {
+            animation: headerExpand 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes headerExpand {
+            0% {
+                transform: translateY(0);
+            }
+            30% {
+                transform: translateY(-5px);
+            }
+            50% {
+                transform: translateY(2px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        /* Smooth backdrop blur effect */
+        .money-card {
+            backdrop-filter: blur(0px);
+            transition: backdrop-filter 0.4s ease;
+        }
+
+        .money-card.expanded {
+            backdrop-filter: blur(8px);
+        }
+
+        /* SVG Icons */
+        svg {
+            display: block;
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background-color: #252537;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Info Box */
+        .info-box {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background-color: #252537;
+            color: white;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .info-box strong {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 400px) {
+            .phone-frame {
+                width: 100%;
+                max-width: 360px;
+                height: 100vh;
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-frame">
+        <div class="screen">
+            <!-- Header -->
+            <div class="header">
+                <div class="header-left">
+                    <button class="icon-button" onclick="handleBack()">
+                        <!-- Chevron Left Icon (Figma) -->
+                        <svg width="24" height="24" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0.0600738 6.03934C0.0980227 6.12859 0.152283 6.20998 0.220074 6.27934L5.22007 11.2793C5.36225 11.4118 5.55029 11.4839 5.7446 11.4805C5.9389 11.4771 6.12428 11.3984 6.2617 11.261C6.39911 11.1235 6.47782 10.9382 6.48125 10.7439C6.48468 10.5496 6.41255 10.3615 6.28007 10.2193L2.56007 6.49934L14.7501 6.49934C14.949 6.49934 15.1398 6.42032 15.2804 6.27967C15.4211 6.13902 15.5001 5.94825 15.5001 5.74934C15.5001 5.55043 15.4211 5.35966 15.2804 5.21901C15.1398 5.07836 14.949 4.99934 14.7501 4.99934L2.56007 4.99934L6.28007 1.27934C6.42053 1.13872 6.49941 0.948091 6.49941 0.74934C6.49941 0.550589 6.42053 0.359965 6.28007 0.219339C6.13945 0.0788889 5.94883 1.73753e-08 5.75007 0C5.55132 -1.73753e-08 5.3607 0.0788889 5.22008 0.219339L0.220074 5.21934C0.152284 5.2887 0.0980228 5.37009 0.0600739 5.45934C0.0204448 5.55089 8.72094e-09 5.64958 0 5.74934C-8.72094e-09 5.8491 0.0204448 5.94779 0.0600738 6.03934Z" fill="#5E5E5E"/>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="header-right">
+                    <button class="icon-button" onclick="handleNotification()">
+                        <!-- Bell Icon (Figma) -->
+                        <svg width="24" height="24" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14.2188 9.63086C14.6328 9.63086 14.9685 9.96682 14.9688 10.3809V11.4814H16.0684C16.4826 11.4814 16.8184 11.8172 16.8184 12.2314C16.8183 12.6456 16.4825 12.9814 16.0684 12.9814H14.2188C13.8046 12.9814 13.4689 12.6456 13.4688 12.2314V10.3809C13.469 9.96682 13.8047 9.63086 14.2188 9.63086Z" fill="#5E5E5E"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M14.5 6.7002C17.3995 6.7002 19.75 9.05072 19.75 11.9502C19.75 14.8497 17.3995 17.2002 14.5 17.2002C11.6005 17.2002 9.25 14.8497 9.25 11.9502C9.25003 9.05072 11.6005 6.7002 14.5 6.7002ZM14.5 8.2002C12.4289 8.2002 10.75 9.87915 10.75 11.9502C10.75 14.0213 12.4289 15.7002 14.5 15.7002C16.5711 15.7002 18.25 14.0213 18.25 11.9502C18.25 9.87915 16.5711 8.2002 14.5 8.2002Z" fill="#5E5E5E"/>
+                            <path d="M16.0498 0C17.4033 0 18.5 1.09675 18.5 2.4502V4.69922C18.5 5.11343 18.1642 5.44922 17.75 5.44922C17.3358 5.44922 17 5.11343 17 4.69922V2.4502C17 1.92518 16.5748 1.5 16.0498 1.5H2.4502C1.92517 1.5 1.50003 1.92518 1.5 2.4502V10.9502C1.5 11.4752 1.92516 11.9004 2.4502 11.9004H6.56348C6.97753 11.9006 7.31348 12.2363 7.31348 12.6504C7.3134 13.0644 6.97748 13.4002 6.56348 13.4004H2.4502C1.09673 13.4004 0 12.3037 0 10.9502V2.4502C2.62694e-05 1.09675 1.09675 0 2.4502 0H16.0498Z" fill="#5E5E5E"/>
+                            <path d="M4.15039 3.8252C4.56441 3.82541 4.90036 4.16113 4.90039 4.5752V8.8252C4.90039 9.23928 4.56442 9.57498 4.15039 9.5752C3.73618 9.5752 3.40039 9.23941 3.40039 8.8252V4.5752C3.40042 4.161 3.73619 3.8252 4.15039 3.8252Z" fill="#5E5E5E"/>
+                            <path d="M7.2168 4.66699C8.33955 3.54427 10.1605 3.54427 11.2832 4.66699C11.348 4.73177 11.4093 4.79966 11.4668 4.86914C11.7305 5.18815 11.686 5.66075 11.3672 5.9248C11.0481 6.18893 10.5747 6.14428 10.3105 5.8252C10.283 5.79194 10.2541 5.75897 10.2227 5.72754C9.68569 5.1906 8.81431 5.1906 8.27734 5.72754C7.74038 6.2645 7.7404 7.13588 8.27734 7.67285C8.31163 7.70713 8.34734 7.73889 8.38379 7.76855C8.70502 8.02996 8.75351 8.50197 8.49219 8.82324C8.23074 9.14452 7.75878 9.19308 7.4375 8.93164C7.36139 8.86971 7.28736 8.80396 7.2168 8.7334C6.09406 7.61064 6.09405 5.78974 7.2168 4.66699Z" fill="#5E5E5E"/>
+                            <path d="M14.3496 3.8252C14.7638 3.8252 15.0996 4.161 15.0996 4.5752V4.7002C15.0996 5.11441 14.7638 5.4502 14.3496 5.4502C13.9356 5.44999 13.5996 5.11428 13.5996 4.7002V4.5752C13.5996 4.16113 13.9356 3.82541 14.3496 3.8252Z" fill="#5E5E5E"/>
+                        </svg>
+                        <div class="notification-badge">1</div>
+                    </button>
+                    
+                    <button class="icon-button" onclick="handleHelp()">
+                        <!-- Question Icon (Figma) -->
+                        <svg width="24" height="24" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M9.75 1.5C5.19322 1.5 1.5 5.19321 1.5 9.75C1.5 14.3068 5.19321 18 9.75 18C14.3068 18 18 14.3068 18 9.75C18 5.19322 14.3068 1.5 9.75 1.5ZM0 9.75C9.41581e-07 4.36478 4.36479 -9.41581e-07 9.75 0C15.1352 9.41581e-07 19.5 4.36479 19.5 9.75C19.5 15.1352 15.1352 19.5 9.75 19.5C4.36478 19.5 -9.41581e-07 15.1352 0 9.75Z" fill="#5E5E5E"/>
+                            <path d="M10.6251 13.5028C10.6254 13.2703 10.5332 13.0473 10.3688 12.8829C10.2044 12.7185 9.9814 12.6263 9.74893 12.6266C9.26595 12.6272 8.87479 13.019 8.875 13.502C8.87521 13.985 9.2667 14.3765 9.74968 14.3767C10.2327 14.3769 10.6245 13.9857 10.6251 13.5028Z" fill="#5E5E5E"/>
+                            <path d="M11.1516 7.77112C11.0918 7.02251 10.4453 6.4555 9.69244 6.49719C9.66827 6.49853 9.64405 6.4987 9.61987 6.4977C8.93235 6.46916 8.32183 6.93392 8.16631 7.60423C8.07269 8.00772 7.6697 8.25893 7.2662 8.16531C6.86271 8.07169 6.6115 7.6687 6.70512 7.2652C7.02091 5.90419 8.25257 4.95695 9.64579 4.9977C11.2144 4.93022 12.5526 6.13108 12.6505 7.70257C12.6514 7.71809 12.6519 7.73363 12.6519 7.74918C12.6519 8.895 11.8167 9.60032 11.2996 10.0208C11.2315 10.0762 11.1681 10.127 11.1091 10.1744C10.905 10.3381 10.7522 10.4607 10.629 10.5895C10.532 10.6909 10.5066 10.7438 10.501 10.7591C10.4963 11.1693 10.1623 11.5004 9.75101 11.5004C9.3368 11.5004 9.00101 11.1646 9.00101 10.7504C9.00101 10.2122 9.2945 9.81447 9.54522 9.55247C9.74408 9.34466 9.99951 9.14042 10.2138 8.96905C10.2628 8.92987 10.3098 8.89231 10.3533 8.85692C10.9002 8.41227 11.1419 8.12004 11.1516 7.77112Z" fill="#5E5E5E"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="content">
+                <div class="greeting">Hola, Santi</div>
+                
+                <div class="money-card" id="moneyCard" onclick="toggleCard()">
+                    <div class="card-header">
+                        <div class="card-content">
+                            <div class="card-title">Receba agora</div>
+                            <div class="amount-container">
+                                <span class="currency">$</span>
+                                <span class="amount">9.800</span>
+                            </div>
+                        </div>
+                        
+                        <div class="card-icon">
+                            <!-- Chevron Down Icon (Figma) -->
+                            <svg width="12" height="8" viewBox="0 0 9 5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M4.5005 3.79317L0.853834 0.1465C0.6585 -0.0488334 0.341833 -0.0488334 0.1465 0.1465C-0.0488333 0.341834 -0.0488333 0.6585 0.1465 0.853833L4.1465 4.85383C4.34183 5.04917 4.6585 5.04917 4.85383 4.85383L8.85383 0.853833C8.95117 0.7565 9.0005 0.6285 9.0005 0.5005C9.0005 0.3725 8.95183 0.2445 8.85383 0.147167C8.6585 -0.0481663 8.34183 -0.0481663 8.1465 0.147167L4.5005 3.79317Z" fill="#434CE4"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Expanded Content -->
+                    <div class="card-expanded-content" id="expandedContent">
+                        <div class="expanded-section">
+                            <!-- Ao antecipar -->
+                            <div class="info-row">
+                                <div class="info-row-header">
+                                    <div class="info-label">Ao antecipar</div>
+                                </div>
+                                <div class="info-row-header">
+                                    <div class="info-amount">
+                                        <span class="currency">$</span>
+                                        <span class="amount">10.000</span>
+                                    </div>
+                                    <button class="edit-icon" onclick="handleEdit(event)">
+                                        <!-- Edit Icon -->
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                            <path d="M11.3333 2.00004C11.5084 1.82494 11.7163 1.68605 11.9451 1.59129C12.1738 1.49653 12.419 1.44775 12.6667 1.44775C12.9143 1.44775 13.1595 1.49653 13.3883 1.59129C13.617 1.68605 13.8249 1.82494 14 2.00004C14.1751 2.17513 14.314 2.383 14.4088 2.61178C14.5035 2.84055 14.5523 3.08575 14.5523 3.33337C14.5523 3.58099 14.5035 3.82619 14.4088 4.05497C14.314 4.28374 14.1751 4.49161 14 4.66671L5 13.6667L1.33333 14.6667L2.33333 11L11.3333 2.00004Z" stroke="#4E4AE8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Há um custo de -->
+                            <div class="info-row">
+                                <div class="info-row-header">
+                                    <div class="info-label">Há um custo de</div>
+                                    <button class="help-icon" onclick="handleCostHelp(event)">
+                                        <!-- Help Icon -->
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                            <circle cx="8" cy="8" r="6.5" stroke="#666666" stroke-width="1.5"/>
+                                            <path d="M8 11.3333V8" stroke="#666666" stroke-width="1.5" stroke-linecap="round"/>
+                                            <circle cx="8" cy="5.33333" r="0.666667" fill="#666666"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="info-amount">
+                                    <span class="currency">$</span>
+                                    <span class="amount">200</span>
+                                </div>
+                            </div>
+
+                            <!-- Você recebe agora -->
+                            <div class="info-row">
+                                <div class="info-label">Você recebe agora</div>
+                                <div class="info-amount">
+                                    <span class="currency">$</span>
+                                    <span class="amount final-amount">9.800</span>
+                                </div>
+                            </div>
+
+                            <!-- Terms and Button -->
+                            <div>
+                                <div class="terms-text">
+                                    Ao confirmar, você aceita os <a href="#" onclick="handleTerms(event)">Termos e condições.</a>
+                                </div>
+                                <button class="confirm-button" onclick="handleConfirm(event)">
+                                    Confirmar antecipação
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Info Box -->
+    <div class="info-box">
+        <strong>💡 Versão Web - Demo Interativa</strong>
+        Clique no card para expandir e ver todos os detalhes! Todos os botões são interativos. Design do Figma.
+    </div>
+
+    <script>
+        // Card state
+        let isExpanded = false;
+
+        // Toast notification function
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2000);
+        }
+
+        // Toggle card expansion
+        function toggleCard() {
+            const card = document.getElementById('moneyCard');
+            const expandedContent = document.getElementById('expandedContent');
+            
+            isExpanded = !isExpanded;
+            
+            if (isExpanded) {
+                card.classList.add('expanded');
+                expandedContent.classList.add('show');
+                showToast('💰 Expandindo detalhes da oferta...');
+            } else {
+                card.classList.remove('expanded');
+                expandedContent.classList.remove('show');
+                showToast('📦 Recolhendo card...');
+            }
+        }
+
+        // Event handlers
+        function handleBack() {
+            showToast('🔙 Voltando para tela anterior...');
+        }
+
+        function handleNotification() {
+            showToast('🔔 Você tem 1 nova notificação!');
+        }
+
+        function handleHelp() {
+            showToast('❓ Abrindo central de ajuda...');
+        }
+
+        function handleEdit(event) {
+            event.stopPropagation();
+            showToast('✏️ Editando valor da antecipação...');
+        }
+
+        function handleCostHelp(event) {
+            event.stopPropagation();
+            showToast('ℹ️ O custo é calculado com base no valor e prazo');
+        }
+
+        function handleTerms(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            showToast('📄 Abrindo Termos e Condições...');
+        }
+
+        function handleConfirm(event) {
+            event.stopPropagation();
+            showToast('✅ Confirmando antecipação de $10.000...');
+            
+            // Simulate confirmation
+            setTimeout(() => {
+                showToast('🎉 Antecipação confirmada com sucesso!');
+            }, 1500);
+        }
+
+        // Log to console
+        console.log('%c🚀 Adelantos App - Web Version', 'color: #F23D4F; font-size: 16px; font-weight: bold;');
+        console.log('Aplicação criada a partir do design do Figma');
+        console.log('✨ Clique no card para expandir e ver mais detalhes!');
+    </script>
+</body>
+</html>
+
