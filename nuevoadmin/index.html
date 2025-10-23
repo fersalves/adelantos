@@ -170,46 +170,27 @@
         }
 
         /* Calendar */
-        .calendar-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.5);
+        .calendar-container {
             display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
+            flex-direction: column;
+            flex: 1;
+            padding: 0 12px;
         }
 
-        .calendar-overlay.show {
+        .calendar-container.show {
             display: flex;
         }
 
-        .calendar {
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 360px;
-            max-height: 80vh;
-            background-color: #f7f7f7;
-            border-radius: 24px 24px 0 0;
-            padding: 20px 12px;
-            overflow-y: auto;
-        }
-
-        .calendar-header {
-            padding: 20px 12px 12px;
-            margin-bottom: 12px;
+        .main-content.hide {
+            display: none;
         }
 
         .calendar-month {
             font-size: 14px;
             font-weight: 600;
             color: #646587;
-            margin-bottom: 12px;
+            padding: 20px 12px 12px;
+            margin-bottom: 0;
         }
 
         .calendar-days-header {
@@ -286,8 +267,9 @@
         }
 
         .calendar-confirm {
-            padding: 0 14px;
-            margin-top: 20px;
+            padding: 0 8px;
+            margin-top: auto;
+            padding-bottom: 20px;
         }
 
         .confirm-selection-button {
@@ -309,6 +291,10 @@
 
         .confirm-selection-button.active:hover {
             background-color: #3E3AD8;
+        }
+
+        .button-container.hide {
+            display: none;
         }
 
         /* Button */
@@ -414,7 +400,7 @@
             </div>
 
             <!-- Content -->
-            <div class="content">
+            <div class="content main-content" id="mainContent">
                 <div class="greeting">Hola, Santi</div>
                 
                 <div class="section-title">Receba agora</div>
@@ -434,22 +420,8 @@
                 </div>
             </div>
 
-            <!-- Action Button -->
-            <div class="button-container">
-                <button class="action-button" onclick="handleReview()">
-                    Revisar detalhes
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Toast Notification -->
-    <div id="toast" class="toast"></div>
-
-    <!-- Calendar Overlay -->
-    <div id="calendarOverlay" class="calendar-overlay" onclick="closeCalendar(event)">
-        <div class="calendar" onclick="event.stopPropagation()">
-            <div class="calendar-header">
+            <!-- Calendar -->
+            <div class="calendar-container" id="calendarContainer">
                 <div class="calendar-month">Abril</div>
                 <div class="calendar-days-header">
                     <div class="calendar-day-name">LUN</div>
@@ -460,88 +432,98 @@
                     <div class="calendar-day-name">SÁB</div>
                     <div class="calendar-day-name">DOM</div>
                 </div>
+                
+                <div class="calendar-weeks">
+                    <!-- Week 1 -->
+                    <div class="calendar-week">
+                        <div class="calendar-day disabled"><span class="day-number">7</span></div>
+                        <div class="calendar-day disabled"><span class="day-number">8</span></div>
+                        <div class="calendar-day disabled"><span class="day-number">9</span></div>
+                        <div class="calendar-day disabled"><span class="day-number">10</span></div>
+                        <div class="calendar-day disabled"><span class="day-number">11</span></div>
+                        <div class="calendar-day" onclick="selectDay(this, 12)">
+                            <span class="day-number">12</span>
+                            <span class="day-value">$ 999 mil</span>
+                        </div>
+                        <div class="calendar-day" onclick="selectDay(this, 13)">
+                            <span class="day-number">13</span>
+                            <span class="day-value">$ 999 mil</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Week 2 -->
+                    <div class="calendar-week">
+                        <div class="calendar-day" onclick="selectDay(this, 14)">
+                            <span class="day-number">14</span>
+                            <span class="day-value">$ 999 mil</span>
+                        </div>
+                        <div class="calendar-day disabled"><span class="day-number">15</span></div>
+                        <div class="calendar-day disabled"><span class="day-number">16</span></div>
+                        <div class="calendar-day disabled"><span class="day-number">17</span></div>
+                        <div class="calendar-day disabled"><span class="day-number">18</span></div>
+                        <div class="calendar-day" onclick="selectDay(this, 19)">
+                            <span class="day-number">19</span>
+                            <span class="day-value">$ 999 mil</span>
+                        </div>
+                        <div class="calendar-day disabled"><span class="day-number">20</span></div>
+                    </div>
+                    
+                    <!-- Week 3 -->
+                    <div class="calendar-week">
+                        <div class="calendar-day disabled"><span class="day-number">21</span></div>
+                        <div class="calendar-day disabled"><span class="day-number">22</span></div>
+                        <div class="calendar-day disabled"><span class="day-number">23</span></div>
+                        <div class="calendar-day selected" onclick="selectDay(this, 24)">
+                            <span class="day-number">24</span>
+                            <span class="day-value">$ 999 mil</span>
+                        </div>
+                        <div class="calendar-day" onclick="selectDay(this, 25)">
+                            <span class="day-number">25</span>
+                            <span class="day-value">$ 999 mil</span>
+                        </div>
+                        <div class="calendar-day" onclick="selectDay(this, 26)">
+                            <span class="day-number">26</span>
+                            <span class="day-value">$ 999 mil</span>
+                        </div>
+                        <div class="calendar-day disabled"><span class="day-number">27</span></div>
+                    </div>
+                    
+                    <!-- Week 4 -->
+                    <div class="calendar-week">
+                        <div class="calendar-day" onclick="selectDay(this, 28)">
+                            <span class="day-number">28</span>
+                            <span class="day-value">$ 999 mil</span>
+                        </div>
+                        <div class="calendar-day" onclick="selectDay(this, 29)">
+                            <span class="day-number">29</span>
+                            <span class="day-value">$ 999 mil</span>
+                        </div>
+                        <div class="calendar-day disabled"><span class="day-number">30</span></div>
+                        <div class="calendar-day"></div>
+                        <div class="calendar-day"></div>
+                        <div class="calendar-day"></div>
+                        <div class="calendar-day"></div>
+                    </div>
+                </div>
+                
+                <div class="calendar-confirm">
+                    <button class="confirm-selection-button active" onclick="confirmSelection()">
+                        Confirmar seleção
+                    </button>
+                </div>
             </div>
-            
-            <div class="calendar-weeks">
-                <!-- Week 1 -->
-                <div class="calendar-week">
-                    <div class="calendar-day disabled"><span class="day-number">7</span></div>
-                    <div class="calendar-day disabled"><span class="day-number">8</span></div>
-                    <div class="calendar-day disabled"><span class="day-number">9</span></div>
-                    <div class="calendar-day disabled"><span class="day-number">10</span></div>
-                    <div class="calendar-day disabled"><span class="day-number">11</span></div>
-                    <div class="calendar-day" onclick="selectDay(this, 12)">
-                        <span class="day-number">12</span>
-                        <span class="day-value">$ 999 mil</span>
-                    </div>
-                    <div class="calendar-day" onclick="selectDay(this, 13)">
-                        <span class="day-number">13</span>
-                        <span class="day-value">$ 999 mil</span>
-                    </div>
-                </div>
-                
-                <!-- Week 2 -->
-                <div class="calendar-week">
-                    <div class="calendar-day" onclick="selectDay(this, 14)">
-                        <span class="day-number">14</span>
-                        <span class="day-value">$ 999 mil</span>
-                    </div>
-                    <div class="calendar-day disabled"><span class="day-number">15</span></div>
-                    <div class="calendar-day disabled"><span class="day-number">16</span></div>
-                    <div class="calendar-day disabled"><span class="day-number">17</span></div>
-                    <div class="calendar-day disabled"><span class="day-number">18</span></div>
-                    <div class="calendar-day" onclick="selectDay(this, 19)">
-                        <span class="day-number">19</span>
-                        <span class="day-value">$ 999 mil</span>
-                    </div>
-                    <div class="calendar-day disabled"><span class="day-number">20</span></div>
-                </div>
-                
-                <!-- Week 3 -->
-                <div class="calendar-week">
-                    <div class="calendar-day disabled"><span class="day-number">21</span></div>
-                    <div class="calendar-day disabled"><span class="day-number">22</span></div>
-                    <div class="calendar-day disabled"><span class="day-number">23</span></div>
-                    <div class="calendar-day selected" onclick="selectDay(this, 24)">
-                        <span class="day-number">24</span>
-                        <span class="day-value">$ 999 mil</span>
-                    </div>
-                    <div class="calendar-day" onclick="selectDay(this, 25)">
-                        <span class="day-number">25</span>
-                        <span class="day-value">$ 999 mil</span>
-                    </div>
-                    <div class="calendar-day" onclick="selectDay(this, 26)">
-                        <span class="day-number">26</span>
-                        <span class="day-value">$ 999 mil</span>
-                    </div>
-                    <div class="calendar-day disabled"><span class="day-number">27</span></div>
-                </div>
-                
-                <!-- Week 4 -->
-                <div class="calendar-week">
-                    <div class="calendar-day" onclick="selectDay(this, 28)">
-                        <span class="day-number">28</span>
-                        <span class="day-value">$ 999 mil</span>
-                    </div>
-                    <div class="calendar-day" onclick="selectDay(this, 29)">
-                        <span class="day-number">29</span>
-                        <span class="day-value">$ 999 mil</span>
-                    </div>
-                    <div class="calendar-day disabled"><span class="day-number">30</span></div>
-                    <div class="calendar-day"></div>
-                    <div class="calendar-day"></div>
-                    <div class="calendar-day"></div>
-                    <div class="calendar-day"></div>
-                </div>
-            </div>
-            
-            <div class="calendar-confirm">
-                <button class="confirm-selection-button active" onclick="confirmSelection()">
-                    Confirmar seleção
+
+            <!-- Action Button -->
+            <div class="button-container" id="actionButtonContainer">
+                <button class="action-button" onclick="handleReview()">
+                    Revisar detalhes
                 </button>
             </div>
         </div>
     </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
 
     <script>
         // Toast notification function
@@ -569,17 +551,11 @@
         }
 
         function handleEdit() {
-            openCalendar();
-        }
-
-        function openCalendar() {
-            document.getElementById('calendarOverlay').classList.add('show');
-        }
-
-        function closeCalendar(event) {
-            if (event.target === document.getElementById('calendarOverlay')) {
-                document.getElementById('calendarOverlay').classList.remove('show');
-            }
+            // Hide main content and button
+            document.getElementById('mainContent').classList.add('hide');
+            document.getElementById('actionButtonContainer').classList.add('hide');
+            // Show calendar
+            document.getElementById('calendarContainer').classList.add('show');
         }
 
         function selectDay(element, day) {
@@ -594,7 +570,10 @@
             const selectedDay = document.querySelector('.calendar-day.selected .day-number');
             if (selectedDay) {
                 showToast(`✅ Data confirmada: ${selectedDay.textContent} de Abril`);
-                document.getElementById('calendarOverlay').classList.remove('show');
+                // Go back to main content
+                document.getElementById('calendarContainer').classList.remove('show');
+                document.getElementById('mainContent').classList.remove('hide');
+                document.getElementById('actionButtonContainer').classList.remove('hide');
             }
         }
 
