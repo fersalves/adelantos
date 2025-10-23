@@ -1,39 +1,48 @@
-# Redesign - Adelantos Web App
+# Rediseño - Adelantos Web App
 
-Versão web interativa da aplicação Adelantos com design baseado no Figma.
+Versión web interactiva de la aplicación Adelantos con diseño basado en Figma.
 
 ## 🚀 Ver Demo
 
-Abra o arquivo `index.html` diretamente no navegador ou acesse a URL do GitHub Pages.
+👉 **[https://fersalves.github.io/adelantos/rediseno/](https://fersalves.github.io/adelantos/rediseno/)**
+
+O abre el archivo `index.html` directamente en el navegador.
 
 ## ✨ Funcionalidades
 
-- ✅ Card expansível com animações suaves (inspirado em Cult UI)
-- ✅ Ícones originais do Figma
-- ✅ Animações spring-like com blur effects
-- ✅ Stagger animations em cascata
+- ✅ Card expandible con animaciones suaves (inspirado en Cult UI)
+- ✅ Íconos originales de Figma
+- ✅ Animaciones spring-like con efectos de blur
+- ✅ Stagger animations en cascada
 - ✅ 100% responsivo
-- ✅ Zero dependências
+- ✅ Zero dependencias
 
-## 🎨 Design System
+## 🎨 Sistema de Diseño
 
-- **Cores**: Baseado no Figma
-- **Animações**: Spring curves com cubic-bezier
-- **Ícones**: SVGs originais do design
+- **Colores**: Basado en Figma
+- **Animaciones**: Spring curves con cubic-bezier
+- **Íconos**: SVGs originales del diseño
 
-## 🖥️ Tecnologias
+## 🖥️ Tecnologías
 
 - HTML5
-- CSS3 (Animações avançadas)
+- CSS3 (Animaciones avanzadas)
 - JavaScript Vanilla
 
-## 📱 Como usar
+## 📱 Cómo usar
 
-1. Clone o repositório
-2. Abra `redesign/index.html` no navegador
-3. Clique no card para expandir e ver as animações
+1. Clona el repositorio
+2. Abre `rediseno/index.html` en el navegador
+3. Haz clic en el card para expandir y ver las animaciones
+
+## 🎮 Interacciones
+
+- **Clic en el card** → Expande con blur effect
+- **Botón editar** ✏️ → Simula edición
+- **Botón ayuda** ❓ → Muestra información
+- **Botón confirmar** → Confirma la anticipación
 
 ---
 
-Desenvolvido com base no design do Figma
+Desarrollado con base en el diseño de Figma
 

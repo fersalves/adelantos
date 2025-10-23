@@ -1,69 +1,63 @@
-# Adelantos - App Mobile
+# Rediseño Adelantos
 
-Aplicación móvil para adelantos de dinero desarrollada con React Native y Expo.
+## 📱 Aplicativo de Simulador de Crédito
 
-## 🚀 Comenzar
+Este projeto implementa um sistema completo de simulação de adelantos (créditos) com interface moderna e intuitiva, seguindo o design especificado.
 
-### Instalación
+### 🎯 Funcionalidades
 
-```bash
-npm install
+#### **L1 - Tela Principal**
+- **Simulador de cenários** com input interativo
+- **CTA dinâmico** que ativa ao digitar
+- **Opções de crédito** pré-configuradas
+- **Sistema de automatização** com toggles
+- **Elementos de fluxo** pontilhados interativos
+
+#### **Bottom Sheets (Modais)**
+1. **Oferta Disponível** - Apresenta opções de adelanto
+2. **Confirmação** - Revisão e confirmação da oferta
+3. **Detalhes do Adelanto** - Impacto no fluxo de caixa
+
+#### **L2 - Regras de Automatização**
+- **Regras pré-definidas** com switches
+- **Personalização de regras** customizáveis
+- **Calendário de fluxo** dos próximos 7 dias
+
+### 🚀 Como usar
+
+1. **Abrir o app**: Navegue até o arquivo `index.html`
+2. **Simular adelanto**: Digite um valor no campo de entrada
+3. **Explorar opções**: Clique nos cards de crédito disponíveis
+4. **Configurar regras**: Acesse L2 para automatização
+5. **Testar fluxo**: Use os bottom sheets para simular o processo completo
+
+### 🎨 Design System
+
+- **Cores principais**: #6c5ce7 (roxo), #e8e8e8 (cinza claro)
+- **Tipografia**: -apple-system, BlinkMacSystemFont, Segoe UI
+- **Componentes**: Cards, Bottom Sheets, Toggles, Inputs
+- **Responsivo**: Adaptável para desktop e mobile
+
+### 📂 Estrutura
+
+```
+rediseño adelantos/
+├── index.html          # Aplicativo principal
+└── README.md          # Documentação
 ```
 
-### Ejecutar la aplicación
+### 🔧 Tecnologias
 
-```bash
-# Iniciar el servidor de desarrollo
-npm start
+- HTML5 semântico
+- CSS3 com Flexbox/Grid
+- JavaScript vanilla
+- Design responsivo
+- Animações suaves
 
-# Ejecutar en iOS
-npm run ios
+---
 
-# Ejecutar en Android
-npm run android
+**Desenvolvido para demonstrar o fluxo completo de adelantos com UX moderna e funcional.**
 
-# Ejecutar en web
-npm run web
-```
 
-## 📱 Estructura del Proyecto
 
-```
-adelantos/
-├── src/
-│   ├── components/         # Componentes reutilizables
-│   │   ├── icons/         # Componentes de iconos SVG
-│   │   ├── IconButton.tsx # Botón con icono
-│   │   └── MoneyCard.tsx  # Tarjeta para mostrar montos
-│   ├── screens/           # Pantallas de la aplicación
-│   │   └── OfertasScreen.tsx
-│   ├── navigation/        # Configuración de navegación
-│   ├── services/          # Servicios y APIs
-│   ├── utils/             # Funciones utilitarias
-│   └── assets/            # Imágenes, fuentes, etc.
-├── docs/                  # Documentación del proyecto
-├── App.tsx                # Punto de entrada de la aplicación
-└── README.md
-```
-
-## 🛠 Tecnologías
-
-- **React Native** - Framework para desarrollo móvil multiplataforma
-- **Expo** - Plataforma para desarrollo y despliegue de aplicaciones React Native
-- **TypeScript** - Superset de JavaScript con tipado estático
-- **React Navigation** - Navegación entre pantallas
-- **React Native SVG** - Soporte para gráficos vectoriales
-
-## 📋 Funcionalidades Implementadas
-
-- ✅ Pantalla de Ofertas con diseño del Figma
-- ✅ Tarjeta interactiva para mostrar montos
-- ✅ Sistema de navegación
-- ✅ Componentes reutilizables
-- ✅ Iconos SVG personalizados
-- ✅ Diseño responsive y moderno
-
-## 🎨 Diseño
-
-El diseño está basado en los prototipos de Figma y sigue las guías de diseño del proyecto.
 
