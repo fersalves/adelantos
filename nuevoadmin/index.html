@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adelantos - Ofertas</title>
+    <title>Adelantos - Nueva Interfaz</title>
     <style>
         * {
             margin: 0;
@@ -34,7 +34,7 @@
         .screen {
             width: 100%;
             height: 100%;
-            padding: 20px 16px;
+            padding: 35px 16px 20px 16px;
             display: flex;
             flex-direction: column;
         }
@@ -44,7 +44,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 60px;
+            margin-bottom: 78px;
         }
 
         .header-left, .header-right {
@@ -95,101 +95,44 @@
         /* Content */
         .content {
             flex: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .greeting {
             font-size: 16px;
             font-weight: 400;
             color: rgba(0, 0, 0, 0.9);
-            margin-bottom: 16px;
+            margin-bottom: 49px;
             line-height: 20px;
         }
 
-        /* Money Card - Smooth Expandable (inspired by Cult UI) */
-        .money-card {
-            background-color: #FFFFFF;
-            border-radius: 16px;
-            padding: 16px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-            cursor: pointer;
-            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-            overflow: hidden;
-            will-change: transform, box-shadow;
-        }
-
-        .money-card:hover:not(.expanded) {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            transform: translateY(-2px) scale(1.01);
-        }
-
-        .money-card.expanded {
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-            transform: scale(1.02);
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            transition: margin-bottom 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            margin-bottom: 0;
-        }
-
-        .expanded .card-header {
-            margin-bottom: 0;
-        }
-
-        .card-content {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            flex: 1;
-            transition: min-height 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            min-height: 80px;
-        }
-
-        .expanded .card-content {
-            min-height: 0;
-        }
-
-        .card-title {
+        .section-title {
             font-size: 16px;
             font-weight: 400;
             color: rgba(0, 0, 0, 0.9);
+            margin-bottom: 8px;
             line-height: 28px;
-            transition: opacity 0.3s ease, transform 0.3s ease, max-height 0.3s ease, margin 0.3s ease;
-            max-height: 28px;
-            margin-bottom: 4px;
         }
 
-        .expanded .card-title {
-            opacity: 0;
-            transform: translateY(-10px);
-            pointer-events: none;
-            max-height: 0;
-            margin-bottom: 0;
+        .amount-section {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: auto;
         }
 
-        .amount-container {
+        .amount-display {
             display: flex;
             align-items: baseline;
             gap: 8px;
-            transition: opacity 0.3s ease, transform 0.3s ease, max-height 0.3s ease;
-            max-height: 50px;
-        }
-
-        .expanded .amount-container {
-            opacity: 0;
-            transform: translateY(-10px);
-            pointer-events: none;
-            max-height: 0;
         }
 
         .currency {
-            font-size: 12px;
+            font-size: 32px;
             font-weight: 600;
             color: #252537;
-            line-height: 16px;
+            line-height: 40px;
         }
 
         .amount {
@@ -199,279 +142,51 @@
             line-height: 40px;
         }
 
-        .card-icon {
+        .edit-button {
             width: 32px;
             height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .card-icon svg {
-            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .expanded .card-icon svg {
-            transform: rotate(180deg) scale(1.1);
-        }
-
-        .expanded .card-icon {
-            transform: scale(1.05);
-        }
-
-        /* Expanded Content - Smooth animations with blur effect */
-        .card-expanded-content {
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-            filter: blur(8px);
-            transform: translateY(-10px);
-            transition: 
-                max-height 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
-                opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                filter 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
-                margin-top 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .card-expanded-content.show {
-            max-height: 500px;
-            opacity: 1;
-            filter: blur(0px);
-            transform: translateY(0);
-            margin-top: 24px;
-        }
-
-        .expanded-section {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        /* Stagger animation for info rows */
-        .info-row {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            opacity: 0;
-            transform: translateY(10px) scale(0.95);
-            transition: 
-                opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .show .info-row {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-
-        /* Stagger delays */
-        .show .info-row:nth-child(1) {
-            transition-delay: 0.1s;
-        }
-
-        .show .info-row:nth-child(2) {
-            transition-delay: 0.2s;
-        }
-
-        .show .info-row:nth-child(3) {
-            transition-delay: 0.3s;
-        }
-
-        .show .info-row:nth-child(4) {
-            transition-delay: 0.4s;
-        }
-
-        .info-row-header {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .info-label {
-            font-size: 16px;
-            font-weight: 400;
-            color: rgba(0, 0, 0, 0.9);
-            line-height: 28px;
-        }
-
-        .info-amount {
-            display: flex;
-            align-items: baseline;
-            gap: 4px;
-            transform-origin: left center;
-        }
-
-        .info-amount .currency {
-            font-size: 20px;
-            line-height: 24px;
-            display: inline-block;
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .info-amount .amount {
-            font-size: 20px;
-            line-height: 24px;
-            display: inline-block;
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .show .info-amount .currency {
-            animation: bounceIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .show .info-amount .amount {
-            animation: bounceIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s;
-        }
-
-        @keyframes bounceIn {
-            0% {
-                transform: scale(0.3) rotate(-5deg);
-                opacity: 0;
-            }
-            50% {
-                transform: scale(1.05) rotate(2deg);
-            }
-            70% {
-                transform: scale(0.95) rotate(-1deg);
-            }
-            100% {
-                transform: scale(1) rotate(0deg);
-                opacity: 1;
-            }
-        }
-
-        .edit-icon, .help-icon {
-            width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             background-color: transparent;
             border: none;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             border-radius: 6px;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            opacity: 0;
-            transform: scale(0.8) rotate(-10deg);
+            transition: all 0.2s;
         }
 
-        .show .edit-icon, .show .help-icon {
-            opacity: 1;
-            transform: scale(1) rotate(0deg);
+        .edit-button:hover {
+            background-color: rgba(78, 74, 232, 0.1);
+            transform: scale(1.1);
         }
 
-        .show .edit-icon {
-            transition-delay: 0.15s;
+        .edit-button:active {
+            transform: scale(0.95);
         }
 
-        .show .help-icon {
-            transition-delay: 0.25s;
-        }
-
-        .edit-icon:hover, .help-icon:hover {
-            background-color: rgba(0, 0, 0, 0.05);
-            transform: scale(1.15) rotate(5deg);
-        }
-
-        .edit-icon:active, .help-icon:active {
-            transform: scale(0.95) rotate(0deg);
-        }
-
-        .terms-text {
-            font-size: 10px;
-            line-height: 12px;
-            color: #282834;
-            text-align: center;
-            margin-top: 8px;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: 
-                opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .show .terms-text {
-            opacity: 1;
-            transform: translateY(0);
-            transition-delay: 0.45s;
-        }
-
-        .terms-text a {
-            text-decoration: underline;
-            color: #282834;
-            transition: color 0.2s ease;
-        }
-
-        .terms-text a:hover {
-            color: #4E4AE8;
-        }
-
-        .confirm-button {
+        /* Button */
+        .action-button {
             width: 100%;
-            padding: 14px 24px;
+            padding: 16px;
             background-color: #4E4AE8;
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            margin-top: 8px;
-            opacity: 0;
-            transform: translateY(20px) scale(0.9);
+            margin-top: 20px;
         }
 
-        .show .confirm-button {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-            transition-delay: 0.5s;
-        }
-
-        .confirm-button:hover {
+        .action-button:hover {
             background-color: #3E3AD8;
-            transform: translateY(-2px) scale(1.02);
+            transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(78, 74, 232, 0.4);
         }
 
-        .confirm-button:active {
-            transform: translateY(0) scale(0.98);
-        }
-
-        .final-amount {
-            font-size: 32px !important;
-        }
-
-        /* Spring-like animation for card header when expanding */
-        .money-card.expanded .card-header {
-            animation: headerExpand 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        @keyframes headerExpand {
-            0% {
-                transform: translateY(0);
-            }
-            30% {
-                transform: translateY(-5px);
-            }
-            50% {
-                transform: translateY(2px);
-            }
-            100% {
-                transform: translateY(0);
-            }
-        }
-
-        /* Smooth backdrop blur effect */
-        .money-card {
-            backdrop-filter: blur(0px);
-            transition: backdrop-filter 0.4s ease;
-        }
-
-        .money-card.expanded {
-            backdrop-filter: blur(8px);
+        .action-button:active {
+            transform: translateY(0);
         }
 
         /* SVG Icons */
@@ -498,26 +213,6 @@
         .toast.show {
             opacity: 1;
             transform: translateX(-50%) translateY(0);
-        }
-
-        /* Info Box */
-        .info-box {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            right: 20px;
-            background-color: #252537;
-            color: white;
-            padding: 16px;
-            border-radius: 12px;
-            font-size: 12px;
-            line-height: 1.5;
-        }
-
-        .info-box strong {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 14px;
         }
 
         @media (max-width: 400px) {
@@ -573,86 +268,26 @@
             <div class="content">
                 <div class="greeting">Hola, Santi</div>
                 
-                <div class="money-card" id="moneyCard" onclick="toggleCard()">
-                    <div class="card-header">
-                        <div class="card-content">
-                            <div class="card-title">Receba agora</div>
-                            <div class="amount-container">
-                                <span class="currency">$</span>
-                                <span class="amount">9.800</span>
-                            </div>
-                        </div>
-                        
-                        <div class="card-icon">
-                            <!-- Chevron Down Icon (Figma) -->
-                            <svg width="12" height="8" viewBox="0 0 9 5" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M4.5005 3.79317L0.853834 0.1465C0.6585 -0.0488334 0.341833 -0.0488334 0.1465 0.1465C-0.0488333 0.341834 -0.0488333 0.6585 0.1465 0.853833L4.1465 4.85383C4.34183 5.04917 4.6585 5.04917 4.85383 4.85383L8.85383 0.853833C8.95117 0.7565 9.0005 0.6285 9.0005 0.5005C9.0005 0.3725 8.95183 0.2445 8.85383 0.147167C8.6585 -0.0481663 8.34183 -0.0481663 8.1465 0.147167L4.5005 3.79317Z" fill="#434CE4"/>
-                            </svg>
-                        </div>
+                <div class="section-title">Receba agora</div>
+                
+                <div class="amount-section">
+                    <div class="amount-display">
+                        <span class="currency">$</span>
+                        <span class="amount">9.800</span>
                     </div>
-
-                    <!-- Expanded Content -->
-                    <div class="card-expanded-content" id="expandedContent">
-                        <div class="expanded-section">
-                            <!-- Ao antecipar -->
-                            <div class="info-row">
-                                <div class="info-row-header">
-                                    <div class="info-label">Ao antecipar</div>
-                                </div>
-                                <div class="info-row-header">
-                                    <div class="info-amount">
-                                        <span class="currency">$</span>
-                                        <span class="amount">10.000</span>
-                                    </div>
-                                    <button class="edit-icon" onclick="handleEdit(event)">
-                                        <!-- Edit Icon -->
-                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                            <path d="M11.3333 2.00004C11.5084 1.82494 11.7163 1.68605 11.9451 1.59129C12.1738 1.49653 12.419 1.44775 12.6667 1.44775C12.9143 1.44775 13.1595 1.49653 13.3883 1.59129C13.617 1.68605 13.8249 1.82494 14 2.00004C14.1751 2.17513 14.314 2.383 14.4088 2.61178C14.5035 2.84055 14.5523 3.08575 14.5523 3.33337C14.5523 3.58099 14.5035 3.82619 14.4088 4.05497C14.314 4.28374 14.1751 4.49161 14 4.66671L5 13.6667L1.33333 14.6667L2.33333 11L11.3333 2.00004Z" stroke="#4E4AE8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Há um custo de -->
-                            <div class="info-row">
-                                <div class="info-row-header">
-                                    <div class="info-label">Há um custo de</div>
-                                    <button class="help-icon" onclick="handleCostHelp(event)">
-                                        <!-- Help Icon -->
-                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                            <circle cx="8" cy="8" r="6.5" stroke="#666666" stroke-width="1.5"/>
-                                            <path d="M8 11.3333V8" stroke="#666666" stroke-width="1.5" stroke-linecap="round"/>
-                                            <circle cx="8" cy="5.33333" r="0.666667" fill="#666666"/>
-                                        </svg>
-                                    </button>
-                                </div>
-                                <div class="info-amount">
-                                    <span class="currency">$</span>
-                                    <span class="amount">200</span>
-                                </div>
-                            </div>
-
-                            <!-- Você recebe agora -->
-                            <div class="info-row">
-                                <div class="info-label">Você recebe agora</div>
-                                <div class="info-amount">
-                                    <span class="currency">$</span>
-                                    <span class="amount final-amount">9.800</span>
-                                </div>
-                            </div>
-
-                            <!-- Terms and Button -->
-                            <div>
-                                <div class="terms-text">
-                                    Ao confirmar, você aceita os <a href="#" onclick="handleTerms(event)">Termos e condições.</a>
-                                </div>
-                                <button class="confirm-button" onclick="handleConfirm(event)">
-                                    Confirmar antecipação
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                    
+                    <button class="edit-button" onclick="handleEdit()">
+                        <!-- Edit Icon -->
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11.3333 2.00004C11.5084 1.82494 11.7163 1.68605 11.9451 1.59129C12.1738 1.49653 12.419 1.44775 12.6667 1.44775C12.9143 1.44775 13.1595 1.49653 13.3883 1.59129C13.617 1.68605 13.8249 1.82494 14 2.00004C14.1751 2.17513 14.314 2.383 14.4088 2.61178C14.5035 2.84055 14.5523 3.08575 14.5523 3.33337C14.5523 3.58099 14.5035 3.82619 14.4088 4.05497C14.314 4.28374 14.1751 4.49161 14 4.66671L5 13.6667L1.33333 14.6667L2.33333 11L11.3333 2.00004Z" stroke="#4E4AE8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
                 </div>
+
+                <!-- Action Button -->
+                <button class="action-button" onclick="handleReview()">
+                    Revisar detalhes
+                </button>
             </div>
         </div>
     </div>
@@ -660,16 +295,7 @@
     <!-- Toast Notification -->
     <div id="toast" class="toast"></div>
 
-    <!-- Info Box -->
-    <div class="info-box">
-        <strong>💡 Versão Web - Demo Interativa</strong>
-        Clique no card para expandir e ver todos os detalhes! Todos os botões são interativos. Design do Figma.
-    </div>
-
     <script>
-        // Card state
-        let isExpanded = false;
-
         // Toast notification function
         function showToast(message) {
             const toast = document.getElementById('toast');
@@ -679,24 +305,6 @@
             setTimeout(() => {
                 toast.classList.remove('show');
             }, 2000);
-        }
-
-        // Toggle card expansion
-        function toggleCard() {
-            const card = document.getElementById('moneyCard');
-            const expandedContent = document.getElementById('expandedContent');
-            
-            isExpanded = !isExpanded;
-            
-            if (isExpanded) {
-                card.classList.add('expanded');
-                expandedContent.classList.add('show');
-                showToast('💰 Expandindo detalhes da oferta...');
-            } else {
-                card.classList.remove('expanded');
-                expandedContent.classList.remove('show');
-                showToast('📦 Recolhendo card...');
-            }
         }
 
         // Event handlers
@@ -712,37 +320,17 @@
             showToast('❓ Abrindo central de ajuda...');
         }
 
-        function handleEdit(event) {
-            event.stopPropagation();
-            showToast('✏️ Editando valor da antecipação...');
+        function handleEdit() {
+            showToast('✏️ Editando valor...');
         }
 
-        function handleCostHelp(event) {
-            event.stopPropagation();
-            showToast('ℹ️ O custo é calculado com base no valor e prazo');
-        }
-
-        function handleTerms(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            showToast('📄 Abrindo Termos e Condições...');
-        }
-
-        function handleConfirm(event) {
-            event.stopPropagation();
-            showToast('✅ Confirmando antecipação de $10.000...');
-            
-            // Simulate confirmation
-            setTimeout(() => {
-                showToast('🎉 Antecipação confirmada com sucesso!');
-            }, 1500);
+        function handleReview() {
+            showToast('📋 Abrindo detalhes da oferta...');
         }
 
         // Log to console
-        console.log('%c🚀 Adelantos App - Web Version', 'color: #F23D4F; font-size: 16px; font-weight: bold;');
-        console.log('Aplicação criada a partir do design do Figma');
-        console.log('✨ Clique no card para expandir e ver mais detalhes!');
+        console.log('%c🚀 Adelantos - Nueva Interfaz', 'color: #4E4AE8; font-size: 16px; font-weight: bold;');
+        console.log('Interface simplificada sem card expandível');
     </script>
 </body>
 </html>
-
