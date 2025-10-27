@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adelantos - Nueva Interfaz</title>
+    <title>Adelantos - Flujo Completo</title>
     <style>
         * {
             margin: 0;
@@ -93,35 +93,110 @@
             justify-content: center;
         }
 
-        /* Content */
+        /* Content Area */
         .content {
             flex: 1;
-            display: flex;
+            display: none;
             flex-direction: column;
             padding: 0 16px;
+        }
+
+        .content.show {
+            display: flex;
         }
 
         .greeting {
             font-size: 16px;
             font-weight: 400;
             color: rgba(0, 0, 0, 0.9);
-            margin-bottom: 24px;
+            margin-bottom: 8px;
             line-height: 20px;
         }
 
-        .section-title {
-            font-size: 16px;
-            font-weight: 400;
-            color: rgba(0, 0, 0, 0.9);
-            margin-bottom: 16px;
-            line-height: 28px;
+        .title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #252537;
+            margin-bottom: 24px;
+            line-height: 32px;
         }
 
-        .amount-section {
+        .section-label {
+            font-size: 14px;
+            font-weight: 400;
+            color: rgba(0, 0, 0, 0.6);
+            margin-bottom: 12px;
+            line-height: 20px;
+        }
+
+        /* Screen 1: Slider */
+        .amount-slider-container {
+            margin-bottom: 32px;
+        }
+
+        .amount-display-large {
             display: flex;
-            align-items: center;
-            gap: 16px;
+            align-items: baseline;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .currency-large {
+            font-size: 48px;
+            font-weight: 600;
+            color: #252537;
+            line-height: 56px;
+        }
+
+        .amount-large {
+            font-size: 48px;
+            font-weight: 600;
+            color: #252537;
+            line-height: 56px;
+        }
+
+        .slider-container {
+            position: relative;
             margin-bottom: auto;
+        }
+
+        .slider-track {
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #D0E7FF 0%, #5C70FA 100%);
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .slider-thumb {
+            width: 24px;
+            height: 24px;
+            background-color: #5C70FA;
+            border-radius: 50%;
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(92, 112, 250, 0.3);
+        }
+
+        /* Screen 2: Calendar */
+        .calendar-screen {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            padding: 0 12px;
+        }
+
+        .info-section {
+            margin-bottom: 20px;
+        }
+
+        .amount-edit-container {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            margin-bottom: 16px;
         }
 
         .amount-display {
@@ -144,45 +219,44 @@
             line-height: 40px;
         }
 
-        .edit-button {
-            padding: 8px;
+        .edit-icon-button {
+            width: 24px;
+            height: 24px;
             background-color: rgba(78, 74, 232, 0.08);
             border: none;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 6px;
-            transition: all 0.2s;
+            border-radius: 4px;
+            padding: 4px;
         }
 
-        .edit-button svg {
+        .info-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .info-text {
+            font-size: 14px;
+            font-weight: 400;
+            color: rgba(0, 0, 0, 0.6);
+            line-height: 20px;
+        }
+
+        .info-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: #252537;
+            line-height: 20px;
+        }
+
+        .info-icon {
             width: 16px;
             height: 16px;
-        }
-
-        .edit-button:hover {
-            background-color: rgba(78, 74, 232, 0.15);
-        }
-
-        .edit-button:active {
-            background-color: rgba(78, 74, 232, 0.2);
-        }
-
-        /* Calendar */
-        .calendar-container {
-            display: none;
-            flex-direction: column;
-            flex: 1;
-            padding: 0 12px;
-        }
-
-        .calendar-container.show {
-            display: flex;
-        }
-
-        .main-content.hide {
-            display: none;
+            cursor: pointer;
         }
 
         .calendar-month {
@@ -211,6 +285,7 @@
             display: flex;
             flex-direction: column;
             gap: 0;
+            margin-bottom: auto;
         }
 
         .calendar-week {
@@ -266,41 +341,59 @@
             text-align: center;
         }
 
-        .calendar-confirm {
-            padding: 0 8px;
-            margin-top: auto;
-            padding-bottom: 20px;
-        }
-
-        .confirm-selection-button {
-            width: 100%;
-            padding: 16px;
-            background-color: #D0D0D5;
-            color: #ffffff;
-            border: none;
-            border-radius: 12px;
+        /* Screen 3: Confirmation */
+        .confirmation-title {
             font-size: 16px;
+            font-weight: 400;
+            color: rgba(0, 0, 0, 0.6);
+            margin-bottom: 8px;
+            line-height: 20px;
+        }
+
+        .confirmation-main-title {
+            font-size: 24px;
             font-weight: 600;
-            cursor: not-allowed;
+            color: #252537;
+            margin-bottom: 32px;
+            line-height: 32px;
         }
 
-        .confirm-selection-button.active {
-            background-color: #4E4AE8;
-            cursor: pointer;
+        .summary-section {
+            margin-bottom: auto;
         }
 
-        .confirm-selection-button.active:hover {
-            background-color: #3E3AD8;
+        .summary-row {
+            margin-bottom: 20px;
+        }
+
+        .summary-label {
+            font-size: 14px;
+            font-weight: 400;
+            color: rgba(0, 0, 0, 0.6);
+            margin-bottom: 8px;
+            line-height: 20px;
+        }
+
+        .summary-amount {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .divider {
+            height: 1px;
+            background-color: rgba(0, 0, 0, 0.1);
+            margin: 24px 0;
+        }
+
+        /* Buttons */
+        .button-container {
+            padding: 0 20px;
+            padding-bottom: 20px;
         }
 
         .button-container.hide {
             display: none;
-        }
-
-        /* Button */
-        .button-container {
-            padding: 0 20px;
-            padding-bottom: 20px;
         }
 
         .action-button {
@@ -324,9 +417,22 @@
             background-color: #2E2AC8;
         }
 
-        /* SVG Icons */
-        svg {
-            display: block;
+        .secondary-button {
+            width: 100%;
+            padding: 12px;
+            background-color: transparent;
+            color: #4E4AE8;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 8px;
+        }
+
+        .secondary-button:hover {
+            background-color: rgba(78, 74, 232, 0.08);
         }
 
         /* Toast notification */
@@ -367,7 +473,6 @@
             <div class="header">
                 <div class="header-left">
                     <button class="icon-button" onclick="handleBack()">
-                        <!-- Chevron Left Icon (Figma) -->
                         <svg width="24" height="24" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M0.0600738 6.03934C0.0980227 6.12859 0.152283 6.20998 0.220074 6.27934L5.22007 11.2793C5.36225 11.4118 5.55029 11.4839 5.7446 11.4805C5.9389 11.4771 6.12428 11.3984 6.2617 11.261C6.39911 11.1235 6.47782 10.9382 6.48125 10.7439C6.48468 10.5496 6.41255 10.3615 6.28007 10.2193L2.56007 6.49934L14.7501 6.49934C14.949 6.49934 15.1398 6.42032 15.2804 6.27967C15.4211 6.13902 15.5001 5.94825 15.5001 5.74934C15.5001 5.55043 15.4211 5.35966 15.2804 5.21901C15.1398 5.07836 14.949 4.99934 14.7501 4.99934L2.56007 4.99934L6.28007 1.27934C6.42053 1.13872 6.49941 0.948091 6.49941 0.74934C6.49941 0.550589 6.42053 0.359965 6.28007 0.219339C6.13945 0.0788889 5.94883 1.73753e-08 5.75007 0C5.55132 -1.73753e-08 5.3607 0.0788889 5.22008 0.219339L0.220074 5.21934C0.152284 5.2887 0.0980228 5.37009 0.0600739 5.45934C0.0204448 5.55089 8.72094e-09 5.64958 0 5.74934C-8.72094e-09 5.8491 0.0204448 5.94779 0.0600738 6.03934Z" fill="#5E5E5E"/>
                         </svg>
@@ -376,7 +481,6 @@
                 
                 <div class="header-right">
                     <button class="icon-button" onclick="handleNotification()">
-                        <!-- Bell Icon (Figma) -->
                         <svg width="24" height="24" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M14.2188 9.63086C14.6328 9.63086 14.9685 9.96682 14.9688 10.3809V11.4814H16.0684C16.4826 11.4814 16.8184 11.8172 16.8184 12.2314C16.8183 12.6456 16.4825 12.9814 16.0684 12.9814H14.2188C13.8046 12.9814 13.4689 12.6456 13.4688 12.2314V10.3809C13.469 9.96682 13.8047 9.63086 14.2188 9.63086Z" fill="#5E5E5E"/>
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M14.5 6.7002C17.3995 6.7002 19.75 9.05072 19.75 11.9502C19.75 14.8497 17.3995 17.2002 14.5 17.2002C11.6005 17.2002 9.25 14.8497 9.25 11.9502C9.25003 9.05072 11.6005 6.7002 14.5 6.7002ZM14.5 8.2002C12.4289 8.2002 10.75 9.87915 10.75 11.9502C10.75 14.0213 12.4289 15.7002 14.5 15.7002C16.5711 15.7002 18.25 14.0213 18.25 11.9502C18.25 9.87915 16.5711 8.2002 14.5 8.2002Z" fill="#5E5E5E"/>
@@ -389,7 +493,6 @@
                     </button>
                     
                     <button class="icon-button" onclick="handleHelp()">
-                        <!-- Question Icon (Figma) -->
                         <svg width="24" height="24" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M9.75 1.5C5.19322 1.5 1.5 5.19321 1.5 9.75C1.5 14.3068 5.19321 18 9.75 18C14.3068 18 18 14.3068 18 9.75C18 5.19322 14.3068 1.5 9.75 1.5ZM0 9.75C9.41581e-07 4.36478 4.36479 -9.41581e-07 9.75 0C15.1352 9.41581e-07 19.5 4.36479 19.5 9.75C19.5 15.1352 15.1352 19.5 9.75 19.5C4.36478 19.5 -9.41581e-07 15.1352 0 9.75Z" fill="#5E5E5E"/>
                             <path d="M10.6251 13.5028C10.6254 13.2703 10.5332 13.0473 10.3688 12.8829C10.2044 12.7185 9.9814 12.6263 9.74893 12.6266C9.26595 12.6272 8.87479 13.019 8.875 13.502C8.87521 13.985 9.2667 14.3765 9.74968 14.3767C10.2327 14.3769 10.6245 13.9857 10.6251 13.5028Z" fill="#5E5E5E"/>
@@ -399,29 +502,65 @@
                 </div>
             </div>
 
-            <!-- Content -->
-            <div class="content main-content" id="mainContent">
+            <!-- Screen 1: Slider -->
+            <div class="content" id="screen1">
                 <div class="greeting">Hola, Santi</div>
+                <h1 class="title">Invierte en tu negocio sin esperar</h1>
                 
-                <div class="section-title">Receba agora</div>
-                
-                <div class="amount-section">
-                    <div class="amount-display">
-                        <span class="currency">$</span>
-                        <span class="amount">9.800</span>
+                <div class="amount-slider-container">
+                    <div class="section-label">Antecipe</div>
+                    <div class="amount-display-large">
+                        <span class="currency-large">$</span>
+                        <span class="amount-large">10.000</span>
                     </div>
-                    
-                    <button class="edit-button" onclick="handleEdit()">
-                        <!-- Edit Icon -->
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M11.3333 2.00004C11.5084 1.82494 11.7163 1.68605 11.9451 1.59129C12.1738 1.49653 12.419 1.44775 12.6667 1.44775C12.9143 1.44775 13.1595 1.49653 13.3883 1.59129C13.617 1.68605 13.8249 1.82494 14 2.00004C14.1751 2.17513 14.314 2.383 14.4088 2.61178C14.5035 2.84055 14.5523 3.08575 14.5523 3.33337C14.5523 3.58099 14.5035 3.82619 14.4088 4.05497C14.314 4.28374 14.1751 4.49161 14 4.66671L5 13.6667L1.33333 14.6667L2.33333 11L11.3333 2.00004Z" stroke="#4E4AE8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </button>
+                    <div class="slider-container">
+                        <div class="slider-track">
+                            <div class="slider-thumb"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Calendar -->
-            <div class="calendar-container" id="calendarContainer">
+            <!-- Screen 2: Calendar -->
+            <div class="content" id="screen2">
+                <div class="title" style="margin-bottom: 16px;">Elige el monto que necessitas</div>
+                <h2 style="font-size: 20px; font-weight: 600; margin-bottom: 24px;">Edita el periodo en el calendario</h2>
+                
+                <div class="info-section">
+                    <div class="section-label">Antecipe</div>
+                    <div class="amount-edit-container">
+                        <div class="amount-display">
+                            <span class="currency">$</span>
+                            <span class="amount">10.000</span>
+                        </div>
+                        <button class="edit-icon-button">
+                            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M11.3333 2.00004C11.5084 1.82494 11.7163 1.68605 11.9451 1.59129C12.1738 1.49653 12.419 1.44775 12.6667 1.44775C12.9143 1.44775 13.1595 1.49653 13.3883 1.59129C13.617 1.68605 13.8249 1.82494 14 2.00004C14.1751 2.17513 14.314 2.383 14.4088 2.61178C14.5035 2.84055 14.5523 3.08575 14.5523 3.33337C14.5523 3.58099 14.5035 3.82619 14.4088 4.05497C14.314 4.28374 14.1751 4.49161 14 4.66671L5 13.6667L1.33333 14.6667L2.33333 11L11.3333 2.00004Z" stroke="#4E4AE8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <div class="info-row">
+                        <span class="info-text">Por um custo de</span>
+                        <svg class="info-icon" width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M9.75 1.5C5.19322 1.5 1.5 5.19321 1.5 9.75C1.5 14.3068 5.19321 18 9.75 18C14.3068 18 18 14.3068 18 9.75C18 5.19322 14.3068 1.5 9.75 1.5ZM0 9.75C9.41581e-07 4.36478 4.36479 -9.41581e-07 9.75 0C15.1352 9.41581e-07 19.5 4.36479 19.5 9.75C19.5 15.1352 15.1352 19.5 9.75 19.5C4.36478 19.5 -9.41581e-07 15.1352 0 9.75Z" fill="#9c9ebf"/>
+                            <path d="M10.6251 13.5028C10.6254 13.2703 10.5332 13.0473 10.3688 12.8829C10.2044 12.7185 9.9814 12.6263 9.74893 12.6266C9.26595 12.6272 8.87479 13.019 8.875 13.502C8.87521 13.985 9.2667 14.3765 9.74968 14.3767C10.2327 14.3769 10.6245 13.9857 10.6251 13.5028Z" fill="#9c9ebf"/>
+                            <path d="M11.1516 7.77112C11.0918 7.02251 10.4453 6.4555 9.69244 6.49719C9.66827 6.49853 9.64405 6.4987 9.61987 6.4977C8.93235 6.46916 8.32183 6.93392 8.16631 7.60423C8.07269 8.00772 7.6697 8.25893 7.2662 8.16531C6.86271 8.07169 6.6115 7.6687 6.70512 7.2652C7.02091 5.90419 8.25257 4.95695 9.64579 4.9977C11.2144 4.93022 12.5526 6.13108 12.6505 7.70257C12.6514 7.71809 12.6519 7.73363 12.6519 7.74918C12.6519 8.895 11.8167 9.60032 11.2996 10.0208C11.2315 10.0762 11.1681 10.127 11.1091 10.1744C10.905 10.3381 10.7522 10.4607 10.629 10.5895C10.532 10.6909 10.5066 10.7438 10.501 10.7591C10.4963 11.1693 10.1623 11.5004 9.75101 11.5004C9.3368 11.5004 9.00101 11.1646 9.00101 10.7504C9.00101 10.2122 9.2945 9.81447 9.54522 9.55247C9.74408 9.34466 9.99951 9.14042 10.2138 8.96905C10.2628 8.92987 10.3098 8.89231 10.3533 8.85692C10.9002 8.41227 11.1419 8.12004 11.1516 7.77112Z" fill="#9c9ebf"/>
+                        </svg>
+                        <span class="info-value">$ 200</span>
+                    </div>
+                    
+                    <div class="info-row">
+                        <span class="info-text">E receba agora</span>
+                        <svg class="info-icon" width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M9.75 1.5C5.19322 1.5 1.5 5.19321 1.5 9.75C1.5 14.3068 5.19321 18 9.75 18C14.3068 18 18 14.3068 18 9.75C18 5.19322 14.3068 1.5 9.75 1.5ZM0 9.75C9.41581e-07 4.36478 4.36479 -9.41581e-07 9.75 0C15.1352 9.41581e-07 19.5 4.36479 19.5 9.75C19.5 15.1352 15.1352 19.5 9.75 19.5C4.36478 19.5 -9.41581e-07 15.1352 0 9.75Z" fill="#9c9ebf"/>
+                            <path d="M10.6251 13.5028C10.6254 13.2703 10.5332 13.0473 10.3688 12.8829C10.2044 12.7185 9.9814 12.6263 9.74893 12.6266C9.26595 12.6272 8.87479 13.019 8.875 13.502C8.87521 13.985 9.2667 14.3765 9.74968 14.3767C10.2327 14.3769 10.6245 13.9857 10.6251 13.5028Z" fill="#9c9ebf"/>
+                            <path d="M11.1516 7.77112C11.0918 7.02251 10.4453 6.4555 9.69244 6.49719C9.66827 6.49853 9.64405 6.4987 9.61987 6.4977C8.93235 6.46916 8.32183 6.93392 8.16631 7.60423C8.07269 8.00772 7.6697 8.25893 7.2662 8.16531C6.86271 8.07169 6.6115 7.6687 6.70512 7.2652C7.02091 5.90419 8.25257 4.95695 9.64579 4.9977C11.2144 4.93022 12.5526 6.13108 12.6505 7.70257C12.6514 7.71809 12.6519 7.73363 12.6519 7.74918C12.6519 8.895 11.8167 9.60032 11.2996 10.0208C11.2315 10.0762 11.1681 10.127 11.1091 10.1744C10.905 10.3381 10.7522 10.4607 10.629 10.5895C10.532 10.6909 10.5066 10.7438 10.501 10.7591C10.4963 11.1693 10.1623 11.5004 9.75101 11.5004C9.3368 11.5004 9.00101 11.1646 9.00101 10.7504C9.00101 10.2122 9.2945 9.81447 9.54522 9.55247C9.74408 9.34466 9.99951 9.14042 10.2138 8.96905C10.2628 8.92987 10.3098 8.89231 10.3533 8.85692C10.9002 8.41227 11.1419 8.12004 11.1516 7.77112Z" fill="#9c9ebf"/>
+                        </svg>
+                        <span class="info-value">$ 9.800</span>
+                    </div>
+                </div>
+
                 <div class="calendar-month">Abril</div>
                 <div class="calendar-days-header">
                     <div class="calendar-day-name">LUN</div>
@@ -475,7 +614,7 @@
                         <div class="calendar-day disabled"><span class="day-number">23</span></div>
                         <div class="calendar-day selected" onclick="selectDay(this, 24)">
                             <span class="day-number">24</span>
-                            <span class="day-value">$ 999 mil</span>
+                            <span class="day-value">$ 10 mil</span>
                         </div>
                         <div class="calendar-day" onclick="selectDay(this, 25)">
                             <span class="day-number">25</span>
@@ -505,18 +644,60 @@
                         <div class="calendar-day"></div>
                     </div>
                 </div>
+            </div>
+
+            <!-- Screen 3: Confirmation -->
+            <div class="content" id="screen3">
+                <div class="confirmation-title">¡Ya estás a un paso!</div>
+                <h1 class="confirmation-main-title">Confirma tu adelanto</h1>
                 
-                <div class="calendar-confirm">
-                    <button class="confirm-selection-button active" onclick="confirmSelection()">
-                        Confirmar seleção
-                    </button>
+                <div class="summary-section">
+                    <div class="summary-row">
+                        <div class="summary-label">Antecipe</div>
+                        <div class="summary-amount">
+                            <span class="currency">$</span>
+                            <span class="amount">10.000</span>
+                        </div>
+                    </div>
+                    
+                    <div class="summary-row">
+                        <div class="info-row">
+                            <span class="info-text">Por um custo de</span>
+                            <svg class="info-icon" width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M9.75 1.5C5.19322 1.5 1.5 5.19321 1.5 9.75C1.5 14.3068 5.19321 18 9.75 18C14.3068 18 18 14.3068 18 9.75C18 5.19322 14.3068 1.5 9.75 1.5ZM0 9.75C9.41581e-07 4.36478 4.36479 -9.41581e-07 9.75 0C15.1352 9.41581e-07 19.5 4.36479 19.5 9.75C19.5 15.1352 15.1352 19.5 9.75 19.5C4.36478 19.5 -9.41581e-07 15.1352 0 9.75Z" fill="#9c9ebf"/>
+                                <path d="M10.6251 13.5028C10.6254 13.2703 10.5332 13.0473 10.3688 12.8829C10.2044 12.7185 9.9814 12.6263 9.74893 12.6266C9.26595 12.6272 8.87479 13.019 8.875 13.502C8.87521 13.985 9.2667 14.3765 9.74968 14.3767C10.2327 14.3769 10.6245 13.9857 10.6251 13.5028Z" fill="#9c9ebf"/>
+                                <path d="M11.1516 7.77112C11.0918 7.02251 10.4453 6.4555 9.69244 6.49719C9.66827 6.49853 9.64405 6.4987 9.61987 6.4977C8.93235 6.46916 8.32183 6.93392 8.16631 7.60423C8.07269 8.00772 7.6697 8.25893 7.2662 8.16531C6.86271 8.07169 6.6115 7.6687 6.70512 7.2652C7.02091 5.90419 8.25257 4.95695 9.64579 4.9977C11.2144 4.93022 12.5526 6.13108 12.6505 7.70257C12.6514 7.71809 12.6519 7.73363 12.6519 7.74918C12.6519 8.895 11.8167 9.60032 11.2996 10.0208C11.2315 10.0762 11.1681 10.127 11.1091 10.1744C10.905 10.3381 10.7522 10.4607 10.629 10.5895C10.532 10.6909 10.5066 10.7438 10.501 10.7591C10.4963 11.1693 10.1623 11.5004 9.75101 11.5004C9.3368 11.5004 9.00101 11.1646 9.00101 10.7504C9.00101 10.2122 9.2945 9.81447 9.54522 9.55247C9.74408 9.34466 9.99951 9.14042 10.2138 8.96905C10.2628 8.92987 10.3098 8.89231 10.3533 8.85692C10.9002 8.41227 11.1419 8.12004 11.1516 7.77112Z" fill="#9c9ebf"/>
+                            </svg>
+                            <span class="info-value">$ 200</span>
+                        </div>
+                    </div>
+                    
+                    <div class="divider"></div>
+                    
+                    <div class="summary-row">
+                        <div class="info-row">
+                            <span class="info-text" style="font-size: 16px;">E receba agora</span>
+                            <svg class="info-icon" width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M9.75 1.5C5.19322 1.5 1.5 5.19321 1.5 9.75C1.5 14.3068 5.19321 18 9.75 18C14.3068 18 18 14.3068 18 9.75C18 5.19322 14.3068 1.5 9.75 1.5ZM0 9.75C9.41581e-07 4.36478 4.36479 -9.41581e-07 9.75 0C15.1352 9.41581e-07 19.5 4.36479 19.5 9.75C19.5 15.1352 15.1352 19.5 9.75 19.5C4.36478 19.5 -9.41581e-07 15.1352 0 9.75Z" fill="#9c9ebf"/>
+                                <path d="M10.6251 13.5028C10.6254 13.2703 10.5332 13.0473 10.3688 12.8829C10.2044 12.7185 9.9814 12.6263 9.74893 12.6266C9.26595 12.6272 8.87479 13.019 8.875 13.502C8.87521 13.985 9.2667 14.3765 9.74968 14.3767C10.2327 14.3769 10.6245 13.9857 10.6251 13.5028Z" fill="#9c9ebf"/>
+                                <path d="M11.1516 7.77112C11.0918 7.02251 10.4453 6.4555 9.69244 6.49719C9.66827 6.49853 9.64405 6.4987 9.61987 6.4977C8.93235 6.46916 8.32183 6.93392 8.16631 7.60423C8.07269 8.00772 7.6697 8.25893 7.2662 8.16531C6.86271 8.07169 6.6115 7.6687 6.70512 7.2652C7.02091 5.90419 8.25257 4.95695 9.64579 4.9977C11.2144 4.93022 12.5526 6.13108 12.6505 7.70257C12.6514 7.71809 12.6519 7.73363 12.6519 7.74918C12.6519 8.895 11.8167 9.60032 11.2996 10.0208C11.2315 10.0762 11.1681 10.127 11.1091 10.1744C10.905 10.3381 10.7522 10.4607 10.629 10.5895C10.532 10.6909 10.5066 10.7438 10.501 10.7591C10.4963 11.1693 10.1623 11.5004 9.75101 11.5004C9.3368 11.5004 9.00101 11.1646 9.00101 10.7504C9.00101 10.2122 9.2945 9.81447 9.54522 9.55247C9.74408 9.34466 9.99951 9.14042 10.2138 8.96905C10.2628 8.92987 10.3098 8.89231 10.3533 8.85692C10.9002 8.41227 11.1419 8.12004 11.1516 7.77112Z" fill="#9c9ebf"/>
+                            </svg>
+                        </div>
+                        <div class="summary-amount" style="margin-top: 8px;">
+                            <span class="currency">$</span>
+                            <span class="amount">9.800</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Action Button -->
-            <div class="button-container" id="actionButtonContainer">
-                <button class="action-button" onclick="handleReview()">
+            <!-- Button Container -->
+            <div class="button-container" id="buttonContainer">
+                <button class="action-button" id="mainButton" onclick="handleMainButton()">
                     Revisar detalhes
+                </button>
+                <button class="secondary-button" id="secondaryButton" onclick="handleEditValue()" style="display: none;">
+                    Editar valor
                 </button>
             </div>
         </div>
@@ -526,7 +707,73 @@
     <div id="toast" class="toast"></div>
 
     <script>
-        // Toast notification function
+        let currentScreen = 1;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            showScreen(1);
+        });
+
+        // Screen Management
+        function showScreen(screenNumber) {
+            currentScreen = screenNumber;
+            
+            // Hide all screens
+            document.querySelectorAll('.content').forEach(screen => {
+                screen.classList.remove('show');
+            });
+            
+            // Show current screen
+            document.getElementById(`screen${screenNumber}`).classList.add('show');
+            
+            // Update button
+            const mainButton = document.getElementById('mainButton');
+            const secondaryButton = document.getElementById('secondaryButton');
+            
+            if (screenNumber === 1) {
+                mainButton.textContent = 'Revisar detalhes';
+                secondaryButton.style.display = 'none';
+            } else if (screenNumber === 2) {
+                mainButton.textContent = 'Confirmar seleção';
+                secondaryButton.style.display = 'none';
+            } else if (screenNumber === 3) {
+                mainButton.textContent = 'Confirmar antecipação';
+                secondaryButton.style.display = 'block';
+            }
+        }
+
+        // Main Button Handler
+        function handleMainButton() {
+            if (currentScreen === 1) {
+                showScreen(2);
+                showToast('📅 Selecione a data de pagamento');
+            } else if (currentScreen === 2) {
+                const selectedDay = document.querySelector('.calendar-day.selected .day-number');
+                if (selectedDay) {
+                    showScreen(3);
+                    showToast(`✅ Data confirmada: ${selectedDay.textContent} de Abril`);
+                } else {
+                    showToast('⚠️ Selecione uma data primeiro');
+                }
+            } else if (currentScreen === 3) {
+                showToast('🎉 Antecipação confirmada com sucesso!');
+            }
+        }
+
+        // Calendar Day Selection
+        function selectDay(element, day) {
+            document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('selected'));
+            element.classList.add('selected');
+            showToast(`📅 Dia ${day} selecionado`);
+        }
+
+        // Edit Value Handler
+        function handleEditValue() {
+            showScreen(1);
+            showToast('✏️ Ajuste o valor desejado');
+        }
+
+        // Toast notification
         function showToast(message) {
             const toast = document.getElementById('toast');
             toast.textContent = message;
@@ -537,9 +784,14 @@
             }, 2000);
         }
 
-        // Event handlers
+        // Header Handlers
         function handleBack() {
-            showToast('🔙 Voltando para tela anterior...');
+            if (currentScreen > 1) {
+                showScreen(currentScreen - 1);
+                showToast('🔙 Voltando...');
+            } else {
+                showToast('🔙 Voltando para tela anterior...');
+            }
         }
 
         function handleNotification() {
@@ -550,40 +802,9 @@
             showToast('❓ Abrindo central de ajuda...');
         }
 
-        function handleEdit() {
-            // Hide main content and button
-            document.getElementById('mainContent').classList.add('hide');
-            document.getElementById('actionButtonContainer').classList.add('hide');
-            // Show calendar
-            document.getElementById('calendarContainer').classList.add('show');
-        }
-
-        function selectDay(element, day) {
-            // Remove selected class from all days
-            document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('selected'));
-            // Add selected class to clicked day
-            element.classList.add('selected');
-            showToast(`📅 Dia ${day} selecionado`);
-        }
-
-        function confirmSelection() {
-            const selectedDay = document.querySelector('.calendar-day.selected .day-number');
-            if (selectedDay) {
-                showToast(`✅ Data confirmada: ${selectedDay.textContent} de Abril`);
-                // Go back to main content
-                document.getElementById('calendarContainer').classList.remove('show');
-                document.getElementById('mainContent').classList.remove('hide');
-                document.getElementById('actionButtonContainer').classList.remove('hide');
-            }
-        }
-
-        function handleReview() {
-            showToast('📋 Abrindo detalhes da oferta...');
-        }
-
-        // Log to console
-        console.log('%c🚀 Adelantos - Nueva Interfaz', 'color: #4E4AE8; font-size: 16px; font-weight: bold;');
-        console.log('Interface simplificada sem card expandível');
+        // Log
+        console.log('%c🚀 Adelantos - Flujo Completo', 'color: #4E4AE8; font-size: 16px; font-weight: bold;');
+        console.log('Fluxo: 1) Slider → 2) Calendário → 3) Confirmação');
     </script>
 </body>
 </html>
