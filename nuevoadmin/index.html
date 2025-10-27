@@ -58,7 +58,7 @@
         .icon-button {
             width: 40px;
             height: 40px;
-            background-color: #EFEFEF;
+            background-color: #FFFFFF;
             border: none;
             border-radius: 12px;
             display: flex;
@@ -70,11 +70,18 @@
         }
 
         .icon-button:hover {
-            background-color: #E0E0E0;
+            background-color: #F5F5F5;
         }
 
         .icon-button:active {
-            background-color: #D0D0D0;
+            background-color: #EFEFEF;
+        }
+        
+        .header-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #252537;
+            line-height: 20px;
         }
 
         .notification-badge {
@@ -427,6 +434,15 @@
                     <button class="icon-button" onclick="handleBack()">
                         <svg width="24" height="24" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M0.0600738 6.03934C0.0980227 6.12859 0.152283 6.20998 0.220074 6.27934L5.22007 11.2793C5.36225 11.4118 5.55029 11.4839 5.7446 11.4805C5.9389 11.4771 6.12428 11.3984 6.2617 11.261C6.39911 11.1235 6.47782 10.9382 6.48125 10.7439C6.48468 10.5496 6.41255 10.3615 6.28007 10.2193L2.56007 6.49934L14.7501 6.49934C14.949 6.49934 15.1398 6.42032 15.2804 6.27967C15.4211 6.13902 15.5001 5.94825 15.5001 5.74934C15.5001 5.55043 15.4211 5.35966 15.2804 5.21901C15.1398 5.07836 14.949 4.99934 14.7501 4.99934L2.56007 4.99934L6.28007 1.27934C6.42053 1.13872 6.49941 0.948091 6.49941 0.74934C6.49941 0.550589 6.42053 0.359965 6.28007 0.219339C6.13945 0.0788889 5.94883 1.73753e-08 5.75007 0C5.55132 -1.73753e-08 5.3607 0.0788889 5.22008 0.219339L0.220074 5.21934C0.152284 5.2887 0.0980228 5.37009 0.0600739 5.45934C0.0204448 5.55089 8.72094e-09 5.64958 0 5.74934C-8.72094e-09 5.8491 0.0204448 5.94779 0.0600738 6.03934Z" fill="#5E5E5E"/>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <div class="header-title">Adelantos</div>
+                    <button class="icon-button" style="width: 24px; height: 24px; background-color: transparent;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 10L12 15L17 10" stroke="#5E5E5E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </button>
                 </div>
