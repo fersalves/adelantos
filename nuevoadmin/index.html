@@ -117,7 +117,7 @@
             font-size: 24px;
             font-weight: 600;
             color: #252537;
-            margin-bottom: 24px;
+            margin-bottom: 32px;
             line-height: 32px;
         }
 
@@ -129,16 +129,12 @@
             line-height: 20px;
         }
 
-        /* Screen 1: Slider */
-        .amount-slider-container {
-            margin-bottom: 32px;
-        }
-
+        /* Screen 1: Simple Display */
         .amount-display-large {
             display: flex;
             align-items: baseline;
             gap: 8px;
-            margin-bottom: 16px;
+            margin-bottom: 24px;
         }
 
         .currency-large {
@@ -155,39 +151,19 @@
             line-height: 56px;
         }
 
-        .slider-container {
-            position: relative;
-            margin-bottom: auto;
-        }
-
-        .slider-track {
+        .chart-decoration {
             width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, #D0E7FF 0%, #5C70FA 100%);
-            border-radius: 2px;
+            height: 200px;
+            margin-bottom: auto;
             position: relative;
         }
 
-        .slider-thumb {
-            width: 24px;
-            height: 24px;
-            background-color: #5C70FA;
-            border-radius: 50%;
-            position: absolute;
-            top: -10px;
-            left: 50%;
-            cursor: pointer;
-            box-shadow: 0 2px 8px rgba(92, 112, 250, 0.3);
+        .chart-decoration svg {
+            width: 100%;
+            height: 100%;
         }
 
         /* Screen 2: Calendar */
-        .calendar-screen {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            padding: 0 12px;
-        }
-
         .info-section {
             margin-bottom: 20px;
         }
@@ -502,22 +478,24 @@
                 </div>
             </div>
 
-            <!-- Screen 1: Slider -->
-            <div class="content" id="screen1">
+            <!-- Screen 1: Display com gráfico decorativo -->
+            <div class="content show" id="screen1">
                 <div class="greeting">Hola, Santi</div>
                 <h1 class="title">Invierte en tu negocio sin esperar</h1>
                 
-                <div class="amount-slider-container">
-                    <div class="section-label">Antecipe</div>
-                    <div class="amount-display-large">
-                        <span class="currency-large">$</span>
-                        <span class="amount-large">10.000</span>
-                    </div>
-                    <div class="slider-container">
-                        <div class="slider-track">
-                            <div class="slider-thumb"></div>
-                        </div>
-                    </div>
+                <div class="section-label">Antecipe</div>
+                <div class="amount-display-large">
+                    <span class="currency-large">$</span>
+                    <span class="amount-large">10.000</span>
+                </div>
+                
+                <!-- Gráfico decorativo (não interativo) -->
+                <div class="chart-decoration">
+                    <svg viewBox="0 0 328 200" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                        <path d="M0 180 Q82 120, 164 100 T328 20" stroke="#D0E7FF" stroke-width="3" fill="none" opacity="0.5"/>
+                        <path d="M0 180 Q82 120, 164 100 T328 20" stroke="#5C70FA" stroke-width="3" fill="none"/>
+                        <circle cx="164" cy="100" r="8" fill="#5C70FA"/>
+                    </svg>
                 </div>
             </div>
 
@@ -709,11 +687,6 @@
     <script>
         let currentScreen = 1;
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            showScreen(1);
-        });
-
         // Screen Management
         function showScreen(screenNumber) {
             currentScreen = screenNumber;
@@ -804,7 +777,7 @@
 
         // Log
         console.log('%c🚀 Adelantos - Flujo Completo', 'color: #4E4AE8; font-size: 16px; font-weight: bold;');
-        console.log('Fluxo: 1) Slider → 2) Calendário → 3) Confirmação');
+        console.log('Apenas elementos do protótipo Figma - sem slider interativo');
     </script>
 </body>
 </html>
